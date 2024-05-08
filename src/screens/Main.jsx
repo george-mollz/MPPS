@@ -1,0 +1,271 @@
+import React from 'react';
+import { FlatList, SafeAreaView, View, StyleSheet, Image, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import {MaterialCommunityIcons}  from 'react-native-vector-icons';
+import { ImageBackground } from 'react-native';
+import { colors } from './colors';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Main({navigation, route}) {
+    return (
+       <SafeAreaView style={styles.container}>
+     
+            <View style={styles.profile}> 
+
+                <TouchableOpacity style={styles.dp}>
+                  
+                  
+                
+                </TouchableOpacity>
+
+                <View>
+                      <Text style={{marginLeft: 8, fontWeight:'500'}}>Good morning</Text>    
+                      <Text style={{fontSize: 23, fontWeight: '600'}}> George</Text>    
+                </View>
+
+                <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.navigate('Login')}>
+                  <MaterialCommunityIcons name='dots-vertical' size={40}/>
+                </TouchableOpacity>
+
+            </View>
+            
+
+
+        
+
+
+
+
+
+            <View  style={styles.beware}>    
+              <ImageBackground style={styles.startH} source={require('../assets/Truck.png')}>
+                    <TouchableOpacity
+                    style={{ justifyContent:'center', alignItems:'center', marginLeft: 170, marginBottom: 10, marginLeft:237, width: 150, height: 35, backgroundColor: colors.primary, borderRadius: 35, flexDirection: "row"}}
+                    onPress = {(onPress) = console.log("Verifying")}
+                    >
+                      <Text style={{color: colors.white, paddingRight: 13}}>Start here</Text>
+                      <Image style={{width:25, height:19}} source={require('../assets/Arrow.png')}/>
+                    </TouchableOpacity>
+              </ImageBackground>  
+            </View>
+
+
+
+
+
+
+
+            <View   style={styles.verify}>  
+              <TouchableOpacity    style={styles.verification}  onPress={() => navigation.navigate('BusinessLicenseVerification')} >
+                <Image   style={{height: 50, width: 50, marginLeft: 15 }}   source={require("../assets/VeriIcon.png")} />
+                <View   style={{marginLeft:25}}> 
+                  <Text style={{fontSize: 25, color: colors.secondary}}>Verify documents</Text> 
+                  <Text style={{color:colors.white}}> Enter truck details and verify your</Text>
+                  <Text style={{color:colors.white}}> application with us.</Text>
+                </View>                
+              </TouchableOpacity>  
+
+
+
+
+
+              <View style={{ marginRight:150,  width:230, paddingTop: 2 }}> 
+                  <Text style={{fontSize: 22 , fontWeight: '600'}}>Forest Products</Text>
+                  <Text>Products supported by MPPS</Text>
+              </View>
+
+
+
+
+
+
+                        <View style={styles.products}>    
+                          <View style={{marginRight: 5, paddingTop:10}}>
+                            <Image style={{height: 149, width: 240 ,borderRadius:20}} source={require('../assets/hard_wood_2.png')} /> 
+                          </View>
+
+                          <View style={{paddingTop:13, }}>
+
+
+                            <View style={{flexDirection:'row', }}>
+
+
+                              <View style={{ paddingRight:1}}>
+                                <TouchableWithoutFeedback>
+                                  <Image style={{height: 69, width: 70, borderRadius: 14}} source={require("../assets/Hardwood.png")} />
+                                </TouchableWithoutFeedback>            
+                              </View>
+
+
+                              <View style={{borderRadius: 50}}>
+                                <TouchableWithoutFeedback>
+                                  <Image style={{height: 69, width: 70, borderRadius: 14}} source={require("../assets/softwood.png")} />
+                                </TouchableWithoutFeedback>            
+                              </View>
+
+                            </View>
+
+
+
+
+
+                              
+                            <View style={{flexDirection:'row', paddingTop:6}}>
+
+                              <View style={{paddingRight: 2}}>
+                                <TouchableWithoutFeedback>
+                                  <Image style={{height: 69, width: 70, borderRadius: 14}} source={require("../assets/Timber.png")} />
+                                </TouchableWithoutFeedback>            
+                              </View>
+
+                              <View>
+                                <TouchableWithoutFeedback>
+                                  <Image style={{height: 69, width: 70, borderRadius: 14}} source={require("../assets/WoodPile.png")} />
+                                </TouchableWithoutFeedback>            
+                              </View>
+
+                            </View>
+
+                          </View>
+
+                        </View>
+                      
+             
+                        <View>  
+                              <TouchableOpacity style={styles.history}>
+                                     <Text style={{fontSize: 17, color: colors.secondary, }}>    Completed Deliveries</Text>   
+                                     <ImageBackground style={{height: 40, width: 40, marginLeft:135, justifyContent: 'center', alignItems: 'center'}} source={require("../assets/circle.png")}>
+                                        <Text style={{fontSize: 20, fontWeight:'500',}}>5</Text>
+                                     </ImageBackground>                                     
+                              </TouchableOpacity>  
+                        </View>
+
+                     
+
+
+            </View>
+
+
+
+
+
+        
+
+
+
+         
+        
+
+
+       </SafeAreaView>
+    );
+}
+
+
+
+
+
+const styles = StyleSheet.create({
+
+  container: {
+     justifyContent: 'center',
+     alignItems: 'center',
+     backgroundColor: colors.white,
+     height: 630,
+  },
+
+  dp: {
+    borderRadius: 50,
+    width: 50,
+    height:50,
+    backgroundColor: colors.primary,
+  },
+
+  profile: {
+    
+    marginTop: 40,
+    flexDirection: 'row',
+    width:400,
+ 
+  },
+
+  beware: {
+    backgroundColor: 'gray',
+    marginTop: 10,
+    borderRadius: 70
+  },
+
+  startH: {
+    height:159, 
+    width: 400,
+    flexDirection: 1,
+  
+  },
+  
+  startBtn: {
+
+  },
+
+  verify: {
+    backgroundColor: colors.palegray,
+    marginTop: 9,
+    borderRadius: 27,
+    width: 400,
+    height: 400,
+    
+    alignItems: 'center',
+  },
+
+  verification: {
+    alignItems:'center',
+    flexDirection: 'row',
+    marginTop: 10,   
+    borderRadius: 27,
+    backgroundColor: colors.primary,
+    width: 390,
+    height: 100,
+  },
+
+  history: {
+    alignItems:'center',
+    flexDirection: 'row',
+    marginTop: 15,   
+    borderRadius: 27,
+    backgroundColor: colors.primary,
+    width: 386,
+    height: 50,
+  },
+
+  products: {
+    flexDirection: 'row',
+  },
+
+  tab: {
+    backgroundColor: colors.secondary,
+    height: 60,
+    width: 385,
+    borderRadius: 50,
+    marginTop: 7
+  },
+
+
+  
+
+    
+})
+
+
+
+
+export default Main;
