@@ -32,8 +32,8 @@ function SignUp({navigation}) {
             initialValues={{  firstName: ' ', lastName: ' ', address:' ',  email: ' ', company: ' ' }}
             onSubmit={(values) => console.log(values)}
             validationSchema={validationSchema}
-            >
-               {({ handleChange, handleSubmit, errors, values }) => (
+
+            children =  {({ handleChange, handleSubmit, errors, values }) => (
                 <>
             
                    
@@ -208,7 +208,9 @@ function SignUp({navigation}) {
                     
                 </>
               ) }
-            </Formik> 
+            />
+              
+             
         </SafeAreaView>
     );
 }
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
         jutifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.white,
-        marginTop: 15,
+        
 
 
     },
@@ -322,17 +324,18 @@ const styles = StyleSheet.create({
    
 
     copyright: {
-        fontSize: 19,      
-        color:colors.primary,
-        marginTop: 140,
+        fontSize: 15, 
+        paddingTop: 1, 
+        fontWeight: '600',
+        color : colors.black
     },
 
     footer: {
         jutifyContent: 'center',
         alignItems: 'center',
-        height: 18,
-        width: 800,
-        marginTop: 177,
+        height: "3%",
+        width: "100%",
+        marginTop: 302,
         backgroundColor: colors.primary,
     },
 

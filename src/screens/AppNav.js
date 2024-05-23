@@ -2,7 +2,7 @@ import React from 'react';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {MaterialCommunityIcons } from 'react-native-vector-icons';
+import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import Transit from './Transit';
@@ -33,8 +33,19 @@ function AppNav(props) {
       tabBarActiveTintColor: colors.secondary,
       tabBarInactiveBackgroundColor: colors.lightgray,
       tabBarInactiveTintColor: colors.black,
+      tabBarStyle: {
+        height: 60,
+        position: 'absolute',
+        bottom: 16,
+        right: 11,
+        left: 11,
+        borderRadius: 20,
+        
+      }
     }} 
 
+
+    
    
     initialRouteName='Main'
 

@@ -1,42 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import { SafeAreaView, View, TextInput, Text, Button, TouchableOpacity, Image, StyleSheet, Platform, ScrollView } from 'react-native';
-import { Formik } from 'formik';
+import  {Formik}  from 'formik';
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
-import { colors } from './colors';
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().matches(/^[\w!#$%&'*+/=?^`{|}~-]+(?:\.[\w!#$%&'*+/=?^`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?$/, 'Invalid email format').email().label("Email").nonNullable(true),
-  password: Yup.string().required().label("Password").nonNullable(true),
-});
 
-function Login({ navigation }) {
+
+import { colors } from './colors'
+
+export default function Login({navigation}) {
   
- 
- 
+  //HANDLE NULL INPUT ENTRY
+  const [isButtonDisabled, setIsButtonDisable] = useState(true);
+  
+  
+  
+  
+  
+  
+  
+  
+  // HANDLE LOGIN
+  const handleLogin = async () => {
+    setError(null); // Clear any previous errors
 
- 
+    try {
+      const response = await axios.post('https://your-api-endpoint/login', {
+        email,
+        password,
+      });
+
+      if (response.data.token) {
+        // Store the token in AsyncStorage for future use
+        await AsyncStorage.setItem('authToken', response.data.token);
+        navigation.navigate('Main'); // Navigate to the home screen
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch (error) {
+      console.error(error);
+      setError('An error occurred. Please try again later.');
+    }
+  }
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required().matches( "^(?:(?:@(?:[a-z0-9-*~][a-z0-9-*._~]*)?/[a-z0-9-._~])|[a-z0-9-~])[a-z0-9-._~]*$", 'Invalid email format').email().label("Email").nonNullable(true),
+    password: Yup.string().required().label("Password").nonNullable(true),
+  });
+
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-        onChange={() => console.log(values)}
-      >
-        {({ handleChange, handleSubmit, handleBlur, errors, values }) => (
-          <>
-            <Text style={styles.heading}>Login</Text>
+   <SafeAreaView  style={styles.container}>
+    
+       <Formik 
+       initialValues={{email: '', password: ''}}
+       validationSchema={validationSchema}
+       children={({ handleChange, handleSubmit, handleBlur, errors, values, isValid }) => (
+        <>
+          <Text style={styles.heading}>Login</Text>
             <View style={styles.label}>
               <Text>Email</Text>
             </View>
+
             <View style={styles.input}>
-              <MaterialCommunityIcons
-                name='email'
-                size={25}
-                style={{ color: colors.black, marginRight: 4, marginLeft: 2 }}
-              />
+             
               <TextInput
                 style={styles.textInput}
                 onChangeText={handleChange('email')}
@@ -47,18 +74,16 @@ function Login({ navigation }) {
                 autoCorrect={false}
                 keyboardType='email-address'
                 inputMode='email'
+                onBlur={( ) => setIsButtonDisable(!isValid) }
               />
             </View>
+
             <Text style={{ color: colors.red }}>{errors.email}</Text>
             <View style={styles.label}>
               <Text>Password</Text>
             </View>
             <View style={styles.input}>
-              <MaterialCommunityIcons
-                name='lock'
-                size={30}
-                style={{ color: colors.black, marginRight: 4, marginLeft: 2 }}
-              />
+              
               <TextInput
                 style={styles.textInput}
                 onChangeText={handleChange('password')}
@@ -69,6 +94,7 @@ function Login({ navigation }) {
                 autoCorrect={false}
                 value={values.password}
                 keyboardType='default'
+                onBlur={( ) => setIsButtonDisable(!isValid) }
               />
             </View>
             <Text style={{ color: colors.red }}>{errors.password}</Text>
@@ -77,11 +103,11 @@ function Login({ navigation }) {
               onPress={() => navigation.replace('AppNav')}
               
             >
-              <Text style={{ fontSize: 19 }}>Sign In</Text>
+              <Text style={{ fontSize: 19, fontWeight: 'bold' }}>Sign In</Text>
             </TouchableOpacity>
             <View>
               {/* Sign Up section */}
-              <TouchableOpacity style={styles.dhaa} onPress={() => navigation.navigate('SignUp')}>
+              <TouchableOpacity disabled={isButtonDisabled} style={styles.dhaa} onPress={() => navigation.navigate('SignUp')} >
                 <Text style={{ marginTop: 20 }}>
                   Don't have an account? <Text style={{ fontSize: 17, color: colors.blue }}>Sign Up</Text>
                 </Text>
@@ -93,19 +119,33 @@ function Login({ navigation }) {
             <View style={styles.footer}>
               <Text style={StyleSheet.copyright}>@MPPS 2024</Text>
             </View>
-          </>
-        )}
-      </Formik>
-    </SafeAreaView>
-  );
+
+
+
+
+
+
+
+        </>
+      )}
+       
+       
+       />
+
+    
+    
+   </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
+
   container: {
-    justifyContent: 'center',
+       
         alignItems: 'center',
-        backgroundColor: '#fff',
-        marginTop: Platform.OS ? 10 : 15,
+        
+        flex: 1,
+        
     },
     heading:{
         fontSize: 39,
@@ -122,7 +162,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.lightgray,
         borderRadius: 13,
-        width: 300,
+        width: "70%",
         height: 60,
         marginTop: 9,
         flexDirection: 'row'
@@ -139,7 +179,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         borderWidth: 2,
         borderColor: colors.tertiary,
-        width: 170,
+        width: "30%",
         height: 47,
         marginTop: 11,
     },
@@ -154,19 +194,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     copyright: {
-        fontSize: 19, 
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: '506554',
+      fontSize: 15, 
+      paddingTop: 1, 
+      fontWeight: 'bold',
+      color : colors.black
+        
+        
     },
     footer: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: 17,
-        width: 800,
-        marginTop: 265,
+        height: '3%',
+        width: '100%',
+        marginTop: 394,
         backgroundColor: colors.primary,
+      
     },
 })
-
-export default Login;

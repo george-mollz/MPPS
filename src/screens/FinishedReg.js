@@ -58,8 +58,9 @@ const styles = StyleSheet.create({
         marginTop: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: 28,
-        color: colors.primary,
+        fontSize: 38,
+        fontWeight: '600',
+        color: colors.black,
     },
    
     success: {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
 
     },
     return: {
-        marginTop: 120,
+        marginTop: 160,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -89,15 +90,17 @@ const styles = StyleSheet.create({
     copyright: {
         fontSize: 15, 
         paddingTop: 1, 
+        fontWeight: '600',
+        color : colors.black
         
     },
 
     footer: {
         jutifyContent: 'center',
         alignItems: 'center',
-        height: 45,
-        width: 800,
-        marginTop: 139,
+        height: "3%",
+        width: "100%",
+        marginTop: 223,
         backgroundColor: colors.primary,
     },
     

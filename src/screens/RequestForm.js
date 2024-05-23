@@ -1,8 +1,8 @@
 import React, { useState }  from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, Platform, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Button } from 'react-native';
 import {MaterialCommunityIcons} from 'react-native-vector-icons';
 import { colors } from './colors';
-import  DateTimePicker from '@react-native-community/datetimepicker';
+import  DateTimePicker from 'react-native-date-picker';
 import { Vignette } from 'phosphor-react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -148,10 +148,19 @@ const confirmIOSstartDate = () => {
         <TouchableWithoutFeedback onPress={handlePress}>
         
             <SafeAreaView>
-                <Formik>
+                <Formik
+                 
+                 onSubmit={(values) => console.log(values)}
+                 onChange={() => console.log(values)}
+                >
+
+                    {({values, }) => (
+
+
+
                     <>
                     
-                    
+                   
           
                     <View  style={styles.title}>
                         <Text  style={{color: colors.primary, fontSize: 33,  }}> Transit Application</Text>
@@ -197,7 +206,7 @@ const confirmIOSstartDate = () => {
                                     <DateTimePicker 
                                         mode ='date'
                                         display='spinner'
-                                        value={date}
+                                        value={values.date}
                                         onChange = {onChange}
                                         style={{height: 120, marginTop: -10, width: 350}}
                                         minimumDate={new Date()}
@@ -206,7 +215,7 @@ const confirmIOSstartDate = () => {
 
                                         
 
-                                    {showPicker && Platform.OS === 'ios' && ( 
+                                    {showPicker && Platform.OS === 'android' && ( 
                                     <View 
                                         style={{ flexDirection: 'row', justifyContent: 'space-around'}}
                                         >
@@ -243,7 +252,7 @@ const confirmIOSstartDate = () => {
                                                 <TextInput style={styles.TextInput}
                                                 editable={false}
                                                 onPressIn={toggleDatepicker}
-                                                value={startDate}
+                                                value={values.startDate}
                                                 onChangeText={setStartDate}
 
                                                 />                                         
@@ -265,7 +274,7 @@ const confirmIOSstartDate = () => {
                                     <DateTimePicker 
                                         mode ='date'
                                         display='spinner'
-                                        value={date1}
+                                        value={values.date1}
                                         onChange = {onChange1}
                                         style={{height: 120, marginTop: -10, width: 350}}
                                         minimumDate={new Date()}
@@ -277,7 +286,7 @@ const confirmIOSstartDate = () => {
 
 
 
-                                    {showPicker1 && Platform.OS === 'ios' &&( 
+                                    {showPicker1 && Platform.OS === 'android' &&( 
                                     <View 
                                         style={{ flexDirection: 'row', justifyContent: 'space-around'}}
                                         >
@@ -764,6 +773,9 @@ const confirmIOSstartDate = () => {
 
                   </View>
                     </>
+                    )
+
+                    }
 
                 </Formik>
             

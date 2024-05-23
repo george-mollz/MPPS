@@ -25,7 +25,7 @@ const validationSchema = Yup.object().shape({
 
 
 
-function SignUp({navigation}) {
+function SignUp2({navigation}) {
     return (
         <SafeAreaView       
         
@@ -38,8 +38,7 @@ function SignUp({navigation}) {
             initialValues={{ phoneNumber:' ', password:' ', confirm: ' '}}
             onSubmit={(values) => console.log(values)}
             validationSchema={validationSchema}
-            >
-               {({ handleChange, handleSubmit,handleBlur, errors, values }) => (
+            children = {({ handleChange, handleSubmit,handleBlur, errors, values }) => (
                 <>
             
                    <View style={styles.Header}>
@@ -59,12 +58,7 @@ function SignUp({navigation}) {
 
                     <View style = {styles.input}>   
                     
-                    <MaterialCommunityIcons 
-                    name='email' 
-                    size={25}
-                    style = {{color: colors.black, marginRight: 4, marginLeft: 2,}}
-
-                    />
+                   
 
                     <TextInput 
                     icon = 'mail'
@@ -102,11 +96,7 @@ function SignUp({navigation}) {
                     <View                    
                     style = {styles.input}
                     >
-                    <MaterialCommunityIcons 
-                    name='phone' 
-                    size={30}
-                    style = {{color: 'black', marginRight: 4, marginLeft: 2}} 
-                    />
+                    
 
 
                     <TextInput 
@@ -130,13 +120,7 @@ function SignUp({navigation}) {
                     <View                    
                     style = {styles.input}
                     >
-                    <MaterialCommunityIcons 
-                    name='lock' 
-                    size={30}
-                    style = {{color: 'black', marginRight: 4, marginLeft: 2}} 
-                    />
-
-
+                   
                     <TextInput 
                     onChangeText={handleChange('password')}
                     placeholder='Password'
@@ -166,11 +150,7 @@ function SignUp({navigation}) {
                     <View                    
                     style = {styles.input}
                     >
-                    <MaterialCommunityIcons 
-                    name='lock' 
-                    size={30}
-                    style = {{color: 'black', marginRight: 4, marginLeft: 2}} 
-                    />
+                   
 
 
                     <TextInput 
@@ -216,8 +196,10 @@ function SignUp({navigation}) {
                     </View>        
                     
                 </>
-              ) }
-            </Formik> 
+              )}
+            />
+               
+            
         </SafeAreaView>
     );
 }
@@ -252,7 +234,7 @@ const styles = StyleSheet.create({
         jutifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.white,
-        marginTop: 15,
+      
 
 
     },
@@ -312,7 +294,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 18,
         width: 800,
-        marginTop: 191,
+        marginTop: 323,
         backgroundColor: colors.primary,
     },
 
@@ -320,4 +302,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default SignUp;
+export default SignUp2;

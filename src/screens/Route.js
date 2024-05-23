@@ -26,11 +26,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <MapView style={styles.map}
-       initialRegion={INITIAL_REGION} 
+       //initialRegion={INITIAL_REGION} 
        showsUserLocation
        showsMyLocationButton
        showsCompass
-       provider='google'
+       //provider='google'
       >
       
       

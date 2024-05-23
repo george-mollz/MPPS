@@ -9,16 +9,16 @@ function Getstarted({navigation}) {
         <SafeAreaView  style={styles.container}>
           <View style={styles.intro}>
 
-         <Text style={{fontSize: 35, fontWeight: '600'}}>Welcome to</Text>
-         <Text style={{fontSize: 35, fontWeight: '600'}}>Misitu Products</Text>
-         <Text style={{fontSize: 35, fontWeight: '600'}}>Permit System</Text> 
+         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Welcome to</Text>
+         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Misitu Products</Text>
+         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Permit System</Text> 
 
           </View>
 
          <TouchableOpacity onPress={() => navigation.replace('Login')}>
          <View  style={styles.getStarted}>
 
-            <Text style={{ fontSize: 25, }}>Get Started</Text>  
+            <Text style={{ fontSize: 25, color: colors.black}}>Get Started</Text>  
 
          </View>
          </TouchableOpacity>
@@ -38,6 +38,8 @@ function Getstarted({navigation}) {
       
       justifyContent: 'center',
       alignItems: 'center',
+      flex:1,
+     
      
  
     },
@@ -66,14 +68,16 @@ function Getstarted({navigation}) {
    footer: {
        jutifyContent: 'center',
        alignItems: 'center',
-       height: 45,
-       width: 800,
-       marginTop: 249,
+       height: "3%",
+       width: "100%",
+       marginTop: 387,
        backgroundColor: colors.primary,
    },
 
    copyright: {
-    color: colors.primary,
+    color: colors.black,
+    fontSize : 10,
+    fontWeight: 'bold'
    },
  
  

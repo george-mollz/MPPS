@@ -26,7 +26,7 @@ function Transit({navigation}) {
 
 
               
-                <TouchableOpacity style={styles.apply} onPress={() => navigation.navigate('RequestForm')}>
+                <TouchableOpacity style={styles.apply} onPress={() => navigation.navigate('SampleA')}>
                     <Text style={{color: colors.secondary}}> 
                         Apply
                     </Text>
@@ -41,16 +41,18 @@ function Transit({navigation}) {
 
 const styles = StyleSheet.create({
    container: {
+    flex: 1,
+    alignItems: 'center',
+
 
    },
 
    wrapper: {
      backgroundColor: colors.lightgray,
-     width: 360,
+     width: '90%',
      height: 60,
      borderRadius: 30,
      marginTop: 10,
-     marginLeft: 28,
      flexDirection:'row',
      alignItems: 'center'
 
