@@ -7,6 +7,10 @@ import {colors }from './colors';
 function Getstarted({navigation}) {
     return (
         <SafeAreaView  style={styles.container}>
+
+         <View style={{flex : 18, justifyContent: 'center', alignItems: 'center'}}>
+
+
           <View style={styles.intro}>
 
          <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Welcome to</Text>
@@ -24,9 +28,14 @@ function Getstarted({navigation}) {
          </TouchableOpacity>
 
               
-        <View style = {styles.footer} > 
+                        
+         </View>
+
+
+         <View style = {styles.footer} > 
           <Text style = {StyleSheet.copyright}>@MPPS 2024</Text>
-        </View>                  
+        </View> 
+
           
         </SafeAreaView>
      );
@@ -36,7 +45,7 @@ function Getstarted({navigation}) {
  const styles = StyleSheet.create({
     container:{
       
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       alignItems: 'center',
       flex:1,
      
@@ -68,16 +77,18 @@ function Getstarted({navigation}) {
    footer: {
        jutifyContent: 'center',
        alignItems: 'center',
-       height: "3%",
+       height: 10,
        width: "100%",
        marginTop: 387,
        backgroundColor: colors.primary,
+       flex:1,
    },
 
    copyright: {
     color: colors.black,
     fontSize : 10,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'serif',
    },
  
  

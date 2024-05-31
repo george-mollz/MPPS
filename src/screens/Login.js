@@ -1,17 +1,19 @@
 import React, { useState, } from 'react';
-import { SafeAreaView, View, TextInput, Text, Button, TouchableOpacity, Image, StyleSheet, Platform, ScrollView } from 'react-native';
+import { SafeAreaView, View, TextInput, Text, Button, TouchableOpacity, Image, StyleSheet, Platform, ScrollView, Keyboard, Alert } from 'react-native';
 import  {Formik}  from 'formik';
 import * as Yup from 'yup';
-import { MaterialCommunityIcons } from 'react-native-vector-icons';
-
+import { MaterialCommunityIcons } from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import { colors } from './colors'
 
 export default function Login({navigation}) {
+
+  const handlePress = () => {
+    Keyboard.dismiss();
+};
   
-  //HANDLE NULL INPUT ENTRY
-  const [isButtonDisabled, setIsButtonDisable] = useState(true);
+
   
   
   
@@ -44,14 +46,14 @@ export default function Login({navigation}) {
   }
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required().matches( "^(?:(?:@(?:[a-z0-9-*~][a-z0-9-*._~]*)?/[a-z0-9-._~])|[a-z0-9-~])[a-z0-9-._~]*$", 'Invalid email format').email().label("Email").nonNullable(true),
+    email: Yup.string().required().email().label("Email").nonNullable(true),
     password: Yup.string().required().label("Password").nonNullable(true),
   });
 
 
   return (
    <SafeAreaView  style={styles.container}>
-    
+    <View style={{  alignItems: 'center', flex:28}}>
        <Formik 
        initialValues={{email: '', password: ''}}
        validationSchema={validationSchema}
@@ -59,10 +61,12 @@ export default function Login({navigation}) {
         <>
           <Text style={styles.heading}>Login</Text>
             <View style={styles.label}>
-              <Text>Email</Text>
+              <Text style={{fontSize: 17, color: colors.black, fontWeight: '600', fontFamily: 'serif'}}>Email</Text>
             </View>
 
             <View style={styles.input}>
+
+            
              
               <TextInput
                 style={styles.textInput}
@@ -74,13 +78,13 @@ export default function Login({navigation}) {
                 autoCorrect={false}
                 keyboardType='email-address'
                 inputMode='email'
-                onBlur={( ) => setIsButtonDisable(!isValid) }
+               
               />
             </View>
 
             <Text style={{ color: colors.red }}>{errors.email}</Text>
             <View style={styles.label}>
-              <Text>Password</Text>
+              <Text style={{fontSize: 17, color: colors.black, fontWeight: '600',  fontFamily: 'serif'}}>Password</Text>
             </View>
             <View style={styles.input}>
               
@@ -94,21 +98,22 @@ export default function Login({navigation}) {
                 autoCorrect={false}
                 value={values.password}
                 keyboardType='default'
-                onBlur={( ) => setIsButtonDisable(!isValid) }
+                
+                
               />
             </View>
             <Text style={{ color: colors.red }}>{errors.password}</Text>
             <TouchableOpacity
               style={[styles.button,]}
               onPress={() => navigation.replace('AppNav')}
-              
+              disabled = {values.email === '' || values.password === '' }
             >
-              <Text style={{ fontSize: 19, fontWeight: 'bold' }}>Sign In</Text>
+              <Text style={{ fontSize: 19, fontWeight: 'bold',  fontFamily: 'serif', color: colors.black }}>Sign In</Text>
             </TouchableOpacity>
             <View>
               {/* Sign Up section */}
-              <TouchableOpacity disabled={isButtonDisabled} style={styles.dhaa} onPress={() => navigation.navigate('SignUp')} >
-                <Text style={{ marginTop: 20 }}>
+              <TouchableOpacity  style={styles.dhaa} onPress={() => navigation.navigate('SignUp')} >
+                <Text style={{ marginTop: 20, color: colors.black,fontFamily: 'serif', fontSize: 17  }}>
                   Don't have an account? <Text style={{ fontSize: 17, color: colors.blue }}>Sign Up</Text>
                 </Text>
                 <Image style={{ height: 3, width: 190 }} source={require("../assets/Line.png")} />
@@ -116,9 +121,7 @@ export default function Login({navigation}) {
              
               {/* Additional Login options (e.g., Google sign-in) can be added here */}
             </View>
-            <View style={styles.footer}>
-              <Text style={StyleSheet.copyright}>@MPPS 2024</Text>
-            </View>
+          
 
 
 
@@ -132,6 +135,16 @@ export default function Login({navigation}) {
        
        />
 
+    </View>
+
+
+    
+    <View style={styles.footer}>
+        <Text style={StyleSheet.copyright}>@MPPS 2024</Text>
+    </View>
+    
+    
+
     
     
    </SafeAreaView>
@@ -141,8 +154,8 @@ export default function Login({navigation}) {
 const styles = StyleSheet.create({
 
   container: {
-       
-        alignItems: 'center',
+       justifyContent: 'flex-end',
+        
         
         flex: 1,
         
@@ -150,19 +163,21 @@ const styles = StyleSheet.create({
     heading:{
         fontSize: 39,
         color: colors.black,
-        marginTop: 49
+        marginTop: 49,
+        fontFamily: 'serif'
     },
     label: {
         justifyContent: 'left',
         alignItems: 'left',
         marginTop: 12,
         width: 300,
+        fontFamily: 'serif',
     },
     input: {
         alignItems: 'center',
         backgroundColor: colors.lightgray,
         borderRadius: 13,
-        width: "70%",
+        width: "80%",
         height: 60,
         marginTop: 9,
         flexDirection: 'row'
@@ -171,6 +186,9 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         paddingLeft: 10, // Adjust according to icon size
+        fontFamily: 'serif',
+        width: '85%',
+        color: colors.black,
     },
     button: {
         alignItems: 'center',
@@ -180,7 +198,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: colors.tertiary,
         width: "30%",
-        height: 47,
+        height: 50,
         marginTop: 11,
     },
     dhaa: {
@@ -192,6 +210,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    copyright: {
+      fontSize: 15, 
+      paddingTop: 1, 
+      fontWeight: 'bold',
+      color : colors.black
+        
+        
+    },
+    footer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '3%',
+        width: '100%',
+        marginTop: 394,
+        backgroundColor: colors.primary,
+        flex:1,
+      
     },
     copyright: {
       fontSize: 15, 

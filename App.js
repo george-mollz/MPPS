@@ -9,13 +9,13 @@ import Login from './src/screens/Login';
 import FinishedReg from './src/screens/FinishedReg';
 import Welcome from './src/screens/Welcome';
 import SignUp from './src/screens/SignUp';
-import Main from './src/screens/Main';
+
 import Getstarted from './src/screens/Getstarted';
 import AppNav  from './src/screens/AppNav';
 import RequestForm from './src/screens/RequestForm';
-import Route from './src/screens/Route';
+
 import BusinessLicenseVerification from './src/screens/BusinessLicenseVerification';
-import SampleA from './src/screens/SampleA';
+import History from './src/screens/History';
 
 
 
@@ -37,12 +37,10 @@ export default function App() {
         <Stack.Screen name='SignUp'   component={SignUp} />  
         <Stack.Screen name='SignUp2'   component={SignUp2} />  
         <Stack.Screen name='FinishedReg'   component={FinishedReg} />   
-        <Stack.Screen name='Main'   component={Main} />    
         <Stack.Screen name='AppNav'   component={AppNav} />   
         <Stack.Screen name='RequestForm'   component={RequestForm} />  
-        <Stack.Screen name='Route'   component={Route} />  
         <Stack.Screen name='BusinessLicenseVerification'   component={BusinessLicenseVerification} />  
-        <Stack.Screen name="SampleA" component={SampleA} />
+        <Stack.Screen name='History' component={History} />
        
      </Stack.Navigator>
   );

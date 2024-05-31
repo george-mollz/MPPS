@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
         fontSize: 15, 
         paddingTop: 1, 
         fontWeight: '600',
-        color : colors.black
+        color : colors.black,
+        fontFamily: 'serif'
         
     },
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, TextInput, Text, Button, FlatList, Image, StyleSheet, TouchableOpacity, Platform, ScrollView} from 'react-native';
-
+import { TextInputMask } from 'react-native-masked-text';
 
 import * as Yup from 'yup';
 import {Formik} from 'formik';
@@ -12,20 +12,35 @@ import {colors} from './colors';
 
 
 
-const validationSchema = Yup.object().shape({
-    phoneNumber: Yup.string().min(9).required().nonNullable(),
-    password:  Yup.string().required('Password is required')
-    .min(8, 'Password must be at least 8 characters')
-    .matches(/[a-z]/, 'Password must contain a lowercase letter')
-    .matches(/[A-Z]/, 'Password must contain an uppercase letter')
-    .matches(/\d/, 'Password must contain a digit')
-    .matches(/[!@#$%^&*_]/, 'Password must contain a special character'),
-    confirm:  Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
-})
+
 
 
 
 function SignUp2({navigation}) {
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().required().email().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format').label("Email").nonNullable(),
+        phoneNumber: Yup.string()
+        .min(9)
+        .required()
+        .nonNullable(),
+        password:  Yup.string().required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[a-z]/, ' must contain atleast one lowercase letter')
+        .matches(/[A-Z]/, ' must contain atleast one uppercase letter')
+        .matches(/\d/, ' must contain atleast one digit')
+        .matches(/[!@#$%^&*_]/, 'Password must contain a special character')
+        .nonNullable(),
+        confirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm password is required')
+        .label("Confirm Password"),
+    })
+
+
+    const handlePress = () => {
+        Keyboard.dismiss();
+    };
+
     return (
         <SafeAreaView       
         
@@ -35,7 +50,7 @@ function SignUp2({navigation}) {
 
 
             <Formik
-            initialValues={{ phoneNumber:' ', password:' ', confirm: ' '}}
+            initialValues={{email: '', phoneNumber:'', password:'', confirm: ''}}
             onSubmit={(values) => console.log(values)}
             validationSchema={validationSchema}
             children = {({ handleChange, handleSubmit,handleBlur, errors, values }) => (
@@ -99,13 +114,17 @@ function SignUp2({navigation}) {
                     
 
 
-                    <TextInput 
+                    <TextInputMask 
                     onChangeText={handleChange('phoneNumber')}
-                    placeholder='+254-*********'
-                    textContentType='password'
+                    type={'custom'}
+                    options={{
+                            mask: '(+255) ***-***-***'
+                            }}
+                    placeholder='(+255) ***-***-***'
+                    textContentType='telephoneNumber'
                     autoCapitalize='none'
                     autoCorrect={false}
-                    values={values.password}
+                    values={values.phoneNumber}
                     style={{width: 270}}
                     />
                     </View>
@@ -176,6 +195,7 @@ function SignUp2({navigation}) {
                     <TouchableOpacity
                     style={styles.button} 
                     onPress = {() => navigation.replace('FinishedReg')}
+                    disabled={values.email === '' || values.phoneNumber === '' || values.password === '' || values.confirm === '' }
                     >
                        <Text style={{fontSize: 19}}>SignUp</Text> 
                                         
@@ -296,6 +316,19 @@ const styles = StyleSheet.create({
         width: 800,
         marginTop: 323,
         backgroundColor: colors.primary,
+    },
+
+    text: {
+        fontFamily: 'serif',
+        fontSize: 19,
+        color: colors.black,
+    },
+
+    entry: {
+        color: colors.black,
+        fontFamily: 'serif',
+        flexDirection: 'row',
+        width: '98%',
     },
 
     

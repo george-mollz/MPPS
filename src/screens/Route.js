@@ -29,6 +29,7 @@ export default function App() {
        //initialRegion={INITIAL_REGION} 
        showsUserLocation
        showsMyLocationButton
+       
        showsCompass
        //provider='google'
       >

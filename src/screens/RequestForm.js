@@ -1,8 +1,8 @@
 import React, { useState }  from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TextInput, Pressable, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView, Button } from 'react-native';
-import {MaterialCommunityIcons} from 'react-native-vector-icons';
+import {MaterialCommunityIcons} from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from './colors';
-import  DateTimePicker from 'react-native-date-picker';
+import  DateTimePicker from '@react-native-community/datetimepicker';
 import { Vignette } from 'phosphor-react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';

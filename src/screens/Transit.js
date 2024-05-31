@@ -26,7 +26,7 @@ function Transit({navigation}) {
 
 
               
-                <TouchableOpacity style={styles.apply} onPress={() => navigation.navigate('SampleA')}>
+                <TouchableOpacity style={styles.apply} onPress={() => navigation.navigate('BusinessLicenseVerification')}>
                     <Text style={{color: colors.secondary}}> 
                         Apply
                     </Text>

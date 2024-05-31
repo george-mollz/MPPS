@@ -9,24 +9,32 @@ import { colors } from './colors';
 
 
 
-const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required().label("firstName").nonNullable(),
-    lastName: Yup.string().required().label("lastName").nonNullable(),
-    company: Yup.string().required().label().nonNullable(),
-    address: Yup.string().required().label("address").nonNullable(),
-    email: Yup.string().required().email().matches().label("Email").nonNullable(),
-   
-})
+
 
 
 function SignUp({navigation}) {
+    //VALIDATION SCHEMA
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string().required().label("firstName").nonNullable(),
+        lastName: Yup.string().required().label("lastName").nonNullable(),
+        company: Yup.string().required().label().nonNullable(),
+        address: Yup.string().required().label("address").nonNullable(),
+       
+       
+    });
+
+    const handlePress = () => {
+        Keyboard.dismiss();
+    };
+
     return (
         <SafeAreaView       
         
         style = {styles.container}
         >
-
-
+ 
+       
+        
 
             <Formik
             initialValues={{  firstName: ' ', lastName: ' ', address:' ',  email: ' ', company: ' ' }}
@@ -51,7 +59,7 @@ function SignUp({navigation}) {
                     <View
                     style = {styles.label}
                     >
-                        <Text>First Name</Text>
+                        <Text style={styles.text}>First Name</Text>
                     </View>
 
 
@@ -65,7 +73,7 @@ function SignUp({navigation}) {
                     autoCapitalize='none'
                     autoCorrect={false}
                     keyboardType='default'              
-                   
+                    style={styles.entry}
                     />        
                     
                     </View>
@@ -78,7 +86,7 @@ function SignUp({navigation}) {
                    <View
                     style = {styles.label}
                     >
-                        <Text>Last Name</Text>
+                        <Text style={styles.text}>Last Name</Text>
                     </View>
 
 
@@ -92,7 +100,7 @@ function SignUp({navigation}) {
                     autoCapitalize='none'
                     autoCorrect={false}
                     keyboardType='default'               
-                   
+                    style={styles.entry}
                     />        
                     
                     </View>
@@ -111,7 +119,7 @@ function SignUp({navigation}) {
                    <View
                     style = {styles.label}
                     >
-                        <Text>Company/ Organisation</Text>
+                        <Text style={styles.text}>Company/ Organisation</Text>
                     </View>
 
 
@@ -125,7 +133,7 @@ function SignUp({navigation}) {
                     autoCapitalize='none'
                     autoCorrect={true}
                     keyboardType='default'              
-                   
+                    style={styles.entry}
                     />        
                     
                     </View>
@@ -140,7 +148,7 @@ function SignUp({navigation}) {
                    <View
                     style = {styles.label}
                     >
-                        <Text>Address</Text>
+                        <Text style={styles.text}>Address</Text>
                     </View>
 
 
@@ -154,7 +162,7 @@ function SignUp({navigation}) {
                     autoCapitalize='characters'
                     autoCorrect={false}
                     keyboardType='default'              
-                   
+                    style={styles.entry}
                     />        
                     
                     </View>
@@ -189,8 +197,9 @@ function SignUp({navigation}) {
                     <TouchableOpacity
                     style={styles.button} 
                     onPress = {() => navigation.navigate("SignUp2")}   
+                    disabled={ values.firstName === '' || values.lastName === '' || values.company === '' || values.address === ''    }
                     >
-                       <Text style={{fontSize: 19, }}>Continue</Text>
+                       <Text style={{fontSize: 19, fontFamily: 'serif', color: colors.black, }}>Continue</Text>
 
                     </TouchableOpacity>
                     </View>
@@ -282,6 +291,12 @@ const styles = StyleSheet.create({
 
     },
 
+    text: {
+        fontFamily: 'serif',
+        fontSize: 19,
+        color: colors.black,
+    },
+
   
        
    
@@ -303,8 +318,15 @@ const styles = StyleSheet.create({
         width: 300,
         height: 50,
         marginTop: 9,
-        flexDirection: 'row'
+        flexDirection: 'row',
+      
+    },
 
+    entry: {
+        color: colors.black,
+        fontFamily: 'serif',
+        flexDirection: 'row',
+        width: '98%',
     },
 
     button: {
