@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Image, ImageBackground, SafeAreaView, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { colors } from './colors';
+import { colors } from '../components/colors';
 
 function FinishedReg({navigation }) {
     return (

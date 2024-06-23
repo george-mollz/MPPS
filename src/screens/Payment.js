@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, FlatList  } from 'react-native';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import { colors } from './colors';
+import { colors } from '../components/colors';
 
 
 function Payment(props) {
@@ -49,8 +47,8 @@ function Payment(props) {
                         </TouchableOpacity>
 
                         <View>
-                            <Text style={{marginLeft: 8, fontWeight:'600', color: colors.black}}>{greeting}</Text>    
-                            <Text style={{fontSize: 23, fontWeight: '600', color: colors.black}}> George</Text>    
+                            <Text style={{marginLeft: 8, fontWeight:'600', color: colors.black,  fontFamily:'serif'}}>{greeting}</Text>    
+                            <Text style={{fontSize: 23, fontWeight: '600', color: colors.black,  fontFamily:'serif'}}> George</Text>    
                         </View>
 
                         <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.navigate('Login')} >
@@ -60,20 +58,20 @@ function Payment(props) {
             </View>
 
             <View style={styles.Payments}>
-                <Text style={{fontSize: 25, color : colors.black, fontWeight: '600'  }}>
+                <Text style={{fontSize: 25, color : colors.black, fontWeight: '600', fontFamily:'serif'  }}>
                     Payments
                 </Text>            
             </View>
 
             <View style={styles.PaymentsView}>
-                <Text> </Text>
-
+                <Text style={{ fontFamily:'serif'}}>   Total Payable amount </Text>
+                <Text style={{ fontFamily:'serif'}}>   68,000</Text>
             </View>
 
             <View   style={styles.costEstimation}>  
              
                 <View>
-                    <Text style={{fontSize: 25, color: colors.black,  }}>Cost Estimation</Text>
+                    <Text style={{fontSize: 25, color: colors.black,  fontFamily:'serif' }}>Cost Estimation</Text>
                 </View>
 
 
@@ -136,11 +134,11 @@ const styles = StyleSheet.create({
       },
 
       costEstimation: {
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.lightgray,
         marginTop: 19,
         borderRadius: 27,
         width: '98%',
-        height: 400,
+        height: "auto",
         
         alignItems: 'center',
       },

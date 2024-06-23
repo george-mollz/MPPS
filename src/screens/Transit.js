@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
-import { colors } from './colors';
+import { colors } from '../components/colors';
 
 
 
@@ -26,7 +26,7 @@ function Transit({navigation}) {
 
 
               
-                <TouchableOpacity style={styles.apply} onPress={() => navigation.navigate('BusinessLicenseVerification')}>
+                <TouchableOpacity style={styles.apply} onPress={() => navigation.navigate('TransitForm')}>
                     <Text style={{color: colors.secondary}}> 
                         Apply
                     </Text>
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
      borderRadius: 30,
      marginTop: 10,
      flexDirection:'row',
-     alignItems: 'center'
+     alignItems: 'center',
+     justifyContent:"space-around"
 
    },
 

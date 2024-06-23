@@ -1,11 +1,14 @@
-import React, { useState, } from 'react';
+import React, { useState, useEffect} from 'react';
 import { SafeAreaView, View, TextInput, Text, Button, TouchableOpacity, Image, StyleSheet, Platform, ScrollView, Keyboard, Alert } from 'react-native';
 import  {Formik}  from 'formik';
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from 'react-native-vector-icons/MaterialCommunityIcons';
+//Testing appwrite
+import { client, account } from '../../config/AppwriteLogin';
 
 
-import { colors } from './colors'
+import Footer from '../components/Footer';
+import { colors } from '../components/colors'
 
 export default function Login({navigation}) {
 
@@ -22,26 +25,56 @@ export default function Login({navigation}) {
   
   
   
+useEffect(() => {
+  const checkSession = async () => {
+    try {
+      await account.get();
+      // If there's an active session, log out
+      await account.deleteSession("current");
+    } catch (error) {
+      // No active session found, no action needed
+      console.log("No active session found.");
+    }
+  };
+
+  checkSession();
+}, []);
   // HANDLE LOGIN
-  const handleLogin = async () => {
-    setError(null); // Clear any previous errors
+  const handleLogin = async (values) => {
+    // try {
+    //   const response = await axios.post('https://your-api-endpoint/login', {
+    //     email,
+    //     password,
+    //   });
+
+    //   if (response.data.token) {
+    //     // Store the token in AsyncStorage for future use
+    //     await AsyncStorage.setItem('authToken', response.data.token);
+    //     navigation.navigate('Main'); // Navigate to the home screen
+    //   } else {
+    //     setError('Invalid email or password');
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   setError('An error occurred. Please try again later.');
+    // }
+
+   const {email, password} = values;
+
 
     try {
-      const response = await axios.post('https://your-api-endpoint/login', {
-        email,
-        password,
-      });
+      const promise = account.createEmailPasswordSession(email, password);
 
-      if (response.data.token) {
-        // Store the token in AsyncStorage for future use
-        await AsyncStorage.setItem('authToken', response.data.token);
-        navigation.navigate('Main'); // Navigate to the home screen
-      } else {
-        setError('Invalid email or password');
-      }
-    } catch (error) {
-      console.error(error);
-      setError('An error occurred. Please try again later.');
+promise.then(function (response) {
+    console.log(response); // Success
+    navigation.replace('AppNav')
+});
+} catch (error) {
+  let errorMessage = 'An error occurred. Please try again.';
+  if (error.response) {
+    errorMessage = 'Invalid email or password.';
+  }
+  Alert.alert("Login Failed", errorMessage);
     }
   }
 
@@ -57,6 +90,7 @@ export default function Login({navigation}) {
        <Formik 
        initialValues={{email: '', password: ''}}
        validationSchema={validationSchema}
+       onSubmit={handleLogin}
        children={({ handleChange, handleSubmit, handleBlur, errors, values, isValid }) => (
         <>
           <Text style={styles.heading}>Login</Text>
@@ -105,7 +139,7 @@ export default function Login({navigation}) {
             <Text style={{ color: colors.red }}>{errors.password}</Text>
             <TouchableOpacity
               style={[styles.button,]}
-              onPress={() => navigation.replace('AppNav')}
+              onPress={handleSubmit}
               disabled = {values.email === '' || values.password === '' }
             >
               <Text style={{ fontSize: 19, fontWeight: 'bold',  fontFamily: 'serif', color: colors.black }}>Sign In</Text>
@@ -138,11 +172,9 @@ export default function Login({navigation}) {
     </View>
 
 
+   
     
-    <View style={styles.footer}>
-        <Text style={StyleSheet.copyright}>@MPPS 2024</Text>
-    </View>
-    
+   <Footer />
     
 
     

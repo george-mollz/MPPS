@@ -1,5 +1,5 @@
 import React ,{ useState}from 'react';
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import { StyleSheet, View } from 'react-native';
 
 
@@ -26,12 +26,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       <MapView style={styles.map}
-       //initialRegion={INITIAL_REGION} 
+       initialRegion={INITIAL_REGION} 
        showsUserLocation
        showsMyLocationButton
-       
+       provider={PROVIDER_GOOGLE}
        showsCompass
-       //provider='google'
+       
+        
+       
       >
       
       

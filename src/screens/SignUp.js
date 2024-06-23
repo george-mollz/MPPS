@@ -1,11 +1,11 @@
-import React from 'react';
-import { SafeAreaView, View, TextInput, Text, Button, FlatList, Image, StyleSheet, TouchableOpacity, Platform, ScrollView,} from 'react-native';
-
-
+import React, {useEffect} from 'react';
+import {Alert, SafeAreaView, View, TextInput, Text, Button, FlatList, Image, StyleSheet, TouchableOpacity, Platform, ScrollView,} from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
 import {MaterialCommunityIcons } from 'react-native-vector-icons';
-import { colors } from './colors';
+import { colors } from '../components/colors';
+import { client, account, ID } from '../../config/AppwriteSignUp';
 
 
 
@@ -13,13 +13,96 @@ import { colors } from './colors';
 
 
 function SignUp({navigation}) {
+
+    useEffect(() => {
+        const checkSession = async () => {
+          try {
+            await account.get();
+            // If there's an active session, log out
+            await account.deleteSession("current");
+          } catch (error) {
+            // No active session found, no action needed
+            console.log("No active session found.");
+          }
+        };
+      
+        checkSession();
+      }, []);
+        // HANDLE LOGIN
+        const handleSignUp = async (values) => {
+          // try {
+          //   const response = await axios.post('https://your-api-endpoint/login', {
+          //     email,
+          //     password,
+          //   });
+      
+          //   if (response.data.token) {
+          //     // Store the token in AsyncStorage for future use
+          //     await AsyncStorage.setItem('authToken', response.data.token);
+          //     navigation.navigate('Main'); // Navigate to the home screen
+          //   } else {
+          //     setError('Invalid email or password');
+          //   }
+          // } catch (error) {
+          //   console.error(error);
+          //   setError('An error occurred. Please try again later.');
+          // }
+      
+         const {firstName, lastName, address,  email, officerID,  phoneNumber, password, confirm } = values;
+      
+      
+          try {
+            const promise = account.create(ID, firstName, lastName, address,  email, officerID,  phoneNumber, password, confirm  );
+      
+      promise.then(function (response) {
+          console.log(response); // Success
+          navigation.replace('Login');
+      });
+      } catch (error) {
+        let errorMessage = 'An error occurred. Please try again.';
+        if (error.response) {
+          errorMessage = 'Invalid email or password.';
+        }
+        Alert.alert("Login Failed", errorMessage);
+          }
+        }
+      
+      
+
+
+
+
+
+
+
+
+
+
+
     //VALIDATION SCHEMA
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required().label("firstName").nonNullable(),
         lastName: Yup.string().required().label("lastName").nonNullable(),
-        company: Yup.string().required().label().nonNullable(),
+        officerID: Yup.string().required().label().nonNullable(),
         address: Yup.string().required().label("address").nonNullable(),
-       
+        email: Yup.string().required().email().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format').label("Email").nonNullable(),
+        phoneNumber: Yup.string()
+        .min(9)
+        .required()
+        .nonNullable(),
+        password:  Yup.string().required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[a-z]/, ' must contain atleast one lowercase letter')
+        .matches(/[A-Z]/, ' must contain atleast one uppercase letter')
+        .matches(/\d/, ' must contain atleast one digit')
+        .matches(/[!@#$%^&*()_+[\]{};':"\\|,.<>/?-]/, 'Password must contain a special character')
+        .nonNullable(),
+        confirm: Yup.string()
+        .min(8, 'Confirm Password must be atleast 8 characters long')
+        .oneOf([Yup.ref('password')] , "Your passwords do not match")
+        .required('Confirm password is required')
+        .label("Confirm Password")
+        .nonNullable(),
        
     });
 
@@ -29,16 +112,16 @@ function SignUp({navigation}) {
 
     return (
         <SafeAreaView       
-        
+      
         style = {styles.container}
         >
  
        
-        
+         <View style={styles.container1}>
 
             <Formik
-            initialValues={{  firstName: ' ', lastName: ' ', address:' ',  email: ' ', company: ' ' }}
-            onSubmit={(values) => console.log(values)}
+            initialValues={{  firstName: '', lastName: '', address:'',  email: '', officerID: '',  phoneNumber:'', password:'', confirm: '' }}
+            onSubmit={handleSignUp}
             validationSchema={validationSchema}
 
             children =  {({ handleChange, handleSubmit, errors, values }) => (
@@ -50,17 +133,8 @@ function SignUp({navigation}) {
                     <Text style={{fontSize: 19, color: colors.secondary}}>1</Text>
                    </View>
 
-                  
+                  <ScrollView style={{ width:'73%', }}>
 
-                   <View>
-
-
-                   </View>
-                    <View
-                    style = {styles.label}
-                    >
-                        <Text style={styles.text}>First Name</Text>
-                    </View>
 
 
                     <View style = {styles.input}>   
@@ -83,12 +157,7 @@ function SignUp({navigation}) {
 
 
 
-                   <View
-                    style = {styles.label}
-                    >
-                        <Text style={styles.text}>Last Name</Text>
-                    </View>
-
+                 
 
                     <View style = {styles.input}>   
                     
@@ -116,40 +185,29 @@ function SignUp({navigation}) {
 
 
 
-                   <View
-                    style = {styles.label}
-                    >
-                        <Text style={styles.text}>Company/ Organisation</Text>
-                    </View>
-
+                  
 
                     <View style = {styles.input}>   
                     
                     <TextInput 
-                    onChangeText={handleChange('address')}
-                    placeholder='Company Name'
-                    values={values.company}
-                    textContentType='organizationName'
-                    autoCapitalize='none'
+                    onChangeText={handleChange('officerID')}
+                    placeholder='TFS-Officer ID'
+                    values={values.officerID}
                     autoCorrect={true}
-                    keyboardType='default'              
+                    keyboardType='number-pad'              
                     style={styles.entry}
                     />        
                     
                     </View>
 
-                   <Text  style = {{color: colors.red}} >{errors.company}</Text>
+                   <Text  style = {{color: colors.red}} >{errors.officerID}</Text>
 
 
 
 
 
 
-                   <View
-                    style = {styles.label}
-                    >
-                        <Text style={styles.text}>Address</Text>
-                    </View>
+                 
 
 
                     <View style = {styles.input}>   
@@ -169,7 +227,118 @@ function SignUp({navigation}) {
 
                    <Text  style = {{color: colors.red}} >{errors.address}</Text>
 
+                   
 
+
+
+
+
+
+
+                 
+
+
+                    <View style = {styles.input}>   
+                    
+                   
+
+                    <TextInput 
+                    icon = 'mail'
+                    onChangeText={handleChange('email')}
+                    placeholder='Email'
+                    values={values.email}
+                    textContentType='emailAddress'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    keyboardType='email-address'               
+                    style={styles.entry}
+                    />        
+                    
+                    </View>
+
+                   <Text  style = {{color: colors.red}} >{errors.email}</Text>
+                   
+                
+
+
+
+
+
+
+
+
+
+                   
+
+
+                    <View 
+                    style = {styles.input}
+                    >          
+                    <TextInputMask 
+                    onChangeText={handleChange('phoneNumber')}
+                    type={'custom'}
+                    // options={{
+                    //         mask: '(+255) ***-***-***'
+                    //         }}
+                    placeholder='(+255) ***-***-***'
+                    textContentType='telephoneNumber'
+                    keyboardType='phone-pad'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    values={values.phoneNumber}
+                    style={styles.entry}
+                    />
+                    </View>
+
+                   
+
+                    <View                    
+                    style = {styles.input}
+                    >
+                   
+                    <TextInput 
+                    onChangeText={handleChange('password')}
+                    placeholder='Password'
+                    secureTextEntry
+                    textContentType='password'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    values={values.password}
+                    style={styles.entry}
+                    />
+                    </View>
+
+                    <Text  style = {{color: 'red'}} >{errors.password}</Text>
+
+
+
+
+
+
+
+
+                    <View                    
+                    style = {styles.input}
+                    >
+                   
+
+
+                    <TextInput 
+                    onChangeText={handleChange('confirm')}
+                    placeholder=' Confirm Password'
+                    secureTextEntry
+                    textContentType='password'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    values={values.confirm}
+                    style={styles.entry}
+                    />
+                    </View>
+                  
+                    <Text style = {{color: colors.red}}>{errors.confirm}</Text>
+
+
+                   
 
 
 
@@ -189,20 +358,24 @@ function SignUp({navigation}) {
                   
 
 
+                  </ScrollView>
+
+                   
 
 
 
                                  
-                    <View>
+                    
                     <TouchableOpacity
-                    style={styles.button} 
-                    onPress = {() => navigation.navigate("SignUp2")}   
-                    disabled={ values.firstName === '' || values.lastName === '' || values.company === '' || values.address === ''    }
+                    style={styles.button}
+                    onPress = {handleSubmit}    
+                   // disabled={ values.firstName === '' || values.lastName === '' || values.officerID === '' || values.address === '' || values.email === '' || values.phoneNumber === '' || values.password === '' || values.confirm === '' }
+                    
                     >
-                       <Text style={{fontSize: 19, fontFamily: 'serif', color: colors.black, }}>Continue</Text>
+                       <Text style={{fontSize: 19, fontFamily: 'serif', color: colors.black, }}>SignUp</Text>
 
                     </TouchableOpacity>
-                    </View>
+                    
 
                  
                 
@@ -211,15 +384,17 @@ function SignUp({navigation}) {
 
                    
                     
-                    <View style = {styles.footer} > 
-                        <Text style = {StyleSheet.copyright}>@MPPS 2024</Text>
-                    </View>        
+                        
                     
                 </>
               ) }
             />
+
+         </View>
               
-             
+            <View style = {styles.footer} > 
+                <Text style = {StyleSheet.copyright}>@MPPS 2024</Text>
+            </View>   
         </SafeAreaView>
     );
 }
@@ -266,13 +441,15 @@ function SignUp({navigation}) {
 
 const styles = StyleSheet.create({
 
-    container: {
+    container: {       
+        flex: 1,
+    },
+
+    container1: {
         jutifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.white,
-        
-
-
+        flex: 36,
     },
     
     
@@ -338,7 +515,7 @@ const styles = StyleSheet.create({
         borderColor: colors.tertiary,
         width: 170,
         height: 50,
-        marginTop: 11,
+        marginTop: 5,
         
       },
    
@@ -357,8 +534,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: "3%",
         width: "100%",
-        marginTop: 302,
         backgroundColor: colors.primary,
+        flex:1,
     },
 
     

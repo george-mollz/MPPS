@@ -2,7 +2,7 @@ import React, {useState, useEffect, use} from 'react';
 import { ImageBackground, FlatList, SafeAreaView, View, StyleSheet, Image, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { colors } from './colors';
+import { colors } from '../components/colors';
 
 export default function Main({navigation}) {
 
@@ -47,7 +47,7 @@ export default function Main({navigation}) {
 
               <View>
                   <Text style={{marginLeft: 8, fontWeight:'600', color: colors.black, fontFamily: 'serif'}}>{greeting}</Text>    
-                  <Text style={{fontSize: 23, fontWeight: '600', color: colors.black}}> George</Text>    
+                  <Text style={{fontSize: 23, fontWeight: '600', color: colors.black,  fontFamily:'serif'}}> George</Text>    
               </View>
 
               <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.navigate('Login')} >
@@ -61,7 +61,7 @@ export default function Main({navigation}) {
     <View style={styles.View2}>
 
 
-      <View  style={styles.beware}>    
+       
               <ImageBackground style={styles.startH} source={require('../assets/Truck.png')}>
 
                       <TouchableOpacity
@@ -73,8 +73,7 @@ export default function Main({navigation}) {
                       </TouchableOpacity>
 
               </ImageBackground>
-              
-              </View>
+             
     </View>
 
 
@@ -151,10 +150,10 @@ export default function Main({navigation}) {
                                 
                       
                                    
-                                        <TouchableOpacity style={styles.history} onPress={navigation.navigate("History")} >
+                                        <TouchableOpacity style={styles.history}  >
                                               <Text style={{fontSize: 17, color: colors.secondary, }}>    Completed Deliveries</Text>   
                                               <ImageBackground style={{height: 40, width: 40, marginLeft:135, justifyContent: 'center', alignItems: 'center'}} source={require("../assets/circle.png")}>
-                                                  <Text style={{fontSize: 20, fontWeight:'500', fontFamily: 'serif'}}>5</Text>
+                                                  <Text style={{fontSize: 20, fontWeight:'500', fontFamily: 'serif',color: colors.black}}>5</Text>
                                               </ImageBackground>                                     
                                         </TouchableOpacity>  
                                 
@@ -194,16 +193,23 @@ const styles = StyleSheet.create({
      View1 : {
        height: 72,
        width: '100%',
+       flexDirection: 'row',
+       
      }, 
      
      View2: {
         flex: 1,
+        width: "100%",
+        height: "100%",
+        justifyContent: 'center',
+        alignItems:'center',
+       
+
         
             }, 
      
      View3: {
         flex:3,
-        
         width: '99%',
      },
    
@@ -218,7 +224,7 @@ const styles = StyleSheet.create({
        
        marginTop: 10,
        flexDirection: 'row',
-       width:"98%",
+       width:"100%",
        marginLeft: 4
     
      },
@@ -228,12 +234,15 @@ const styles = StyleSheet.create({
        marginTop: 5,
        borderRadius: 70,
        
+       
      },
    
      startH: {
-       height:159, 
-       width: 400,
-       paddingTop: 110,
+       height:"90%", 
+       width: "99%",
+       borderRadius: 40,
+       flexDirection: "column-reverse"
+       
      
      },
      

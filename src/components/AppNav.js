@@ -5,10 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-import Transit from './Transit';
-import Route from './Route';
-import Main from './Main';
-import Payment from './Payment'
+import Transit from '../screens/Transit';
+import Route from '../screens/Route';
+import Main from '../screens/Main';
+import Payment from '../screens/Payment'
 import { colors } from './colors';
 
 

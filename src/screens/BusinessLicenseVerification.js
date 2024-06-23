@@ -5,7 +5,7 @@ import DocumentPicker, { types } from 'react-native-document-picker'
 
 
 
-import { colors } from './colors'
+import { colors } from '../components/colors'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { ImageBackground } from 'react-native'
 

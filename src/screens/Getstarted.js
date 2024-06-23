@@ -2,7 +2,7 @@ import React from 'react';
 import {View, SafeAreaView, Text, StyleSheet, TouchableWithoutFeedback, Button, ImageBackground, TouchableOpacity} from 'react-native';
 
 
-import {colors }from './colors';
+import {colors }from '../components/colors';
 
 function Getstarted({navigation}) {
     return (
@@ -13,16 +13,16 @@ function Getstarted({navigation}) {
 
           <View style={styles.intro}>
 
-         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Welcome to</Text>
-         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Misitu Products</Text>
-         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black}}>Permit System</Text> 
+         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black, fontFamily: 'serif'}}>Welcome to</Text>
+         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black, fontFamily: 'serif'}}>Misitu Products</Text>
+         <Text style={{fontSize: 35, fontWeight: '600', color: colors.black, fontFamily: 'serif'}}>Permit System</Text> 
 
           </View>
 
          <TouchableOpacity onPress={() => navigation.replace('Login')}>
          <View  style={styles.getStarted}>
 
-            <Text style={{ fontSize: 25, color: colors.black}}>Get Started</Text>  
+            <Text style={{ fontSize: 25, color: colors.black, fontFamily: 'serif'}}>Get Started</Text>  
 
          </View>
          </TouchableOpacity>
