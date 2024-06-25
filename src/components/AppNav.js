@@ -39,7 +39,8 @@ function AppNav(props) {
         bottom: 16,
         right: 11,
         left: 11,
-        borderRadius: 20,
+        borderRadius: 40,
+        
         
       }
     }} 

@@ -44,10 +44,11 @@ export default function App() {
 
 
   return (  
-    <NavigationContainer>
+    // <NavigationContainer>
       
-      <StackNavigator />
-    </NavigationContainer>   
+    //   <StackNavigator />
+    // </NavigationContainer>   
+    <TransitForm />
   );
 }
 

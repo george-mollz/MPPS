@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
    },
 
    apply: {
-    marginLeft: 120,
+    marginLeft: 90,
     width: 95,
     height:35,
     backgroundColor: colors.primary,

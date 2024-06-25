@@ -139,8 +139,11 @@ promise.then(function (response) {
             <Text style={{ color: colors.red }}>{errors.password}</Text>
             <TouchableOpacity
               style={[styles.button,]}
-              onPress={handleSubmit}
-              disabled = {values.email === '' || values.password === '' }
+              onPress={
+              () => navigation.navigate("AppNav")
+             // handleSubmit
+            }
+              //disabled = {values.email === '' || values.password === '' }
             >
               <Text style={{ fontSize: 19, fontWeight: 'bold',  fontFamily: 'serif', color: colors.black }}>Sign In</Text>
             </TouchableOpacity>
@@ -173,8 +176,9 @@ promise.then(function (response) {
 
 
    
-    
-   <Footer />
+    <View>
+      <Footer />
+    </View>
     
 
     
