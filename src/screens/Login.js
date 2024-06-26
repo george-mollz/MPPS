@@ -3,8 +3,8 @@ import { SafeAreaView, View, TextInput, Text, Button, TouchableOpacity, Image, S
 import  {Formik}  from 'formik';
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from 'react-native-vector-icons/MaterialCommunityIcons';
-//Testing appwrite
-import { client, account } from '../../config/AppwriteLogin';
+
+
 
 
 import Footer from '../components/Footer';
@@ -25,22 +25,11 @@ export default function Login({navigation}) {
   
   
   
-useEffect(() => {
-  const checkSession = async () => {
-    try {
-      await account.get();
-      // If there's an active session, log out
-      await account.deleteSession("current");
-    } catch (error) {
-      // No active session found, no action needed
-      console.log("No active session found.");
-    }
-  };
 
-  checkSession();
-}, []);
-  // HANDLE LOGIN
-  const handleLogin = async (values) => {
+  
+// HANDLE LOGIN
+const handleLogin = async (values) => {
+    //const {email, password} = values;
     // try {
     //   const response = await axios.post('https://your-api-endpoint/login', {
     //     email,
@@ -57,26 +46,11 @@ useEffect(() => {
     // } catch (error) {
     //   console.error(error);
     //   setError('An error occurred. Please try again later.');
-    // }
-
-   const {email, password} = values;
+     }
 
 
-    try {
-      const promise = account.createEmailPasswordSession(email, password);
 
-promise.then(function (response) {
-    console.log(response); // Success
-    navigation.replace('AppNav')
-});
-} catch (error) {
-  let errorMessage = 'An error occurred. Please try again.';
-  if (error.response) {
-    errorMessage = 'Invalid email or password.';
-  }
-  Alert.alert("Login Failed", errorMessage);
-    }
-  }
+    
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email").nonNullable(true),

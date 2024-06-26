@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import {Formik} from 'formik';
 import {MaterialCommunityIcons } from 'react-native-vector-icons';
 import { colors } from '../components/colors';
-import { client, account, ID } from '../../config/AppwriteSignUp';
+
 
 
 
@@ -14,20 +14,8 @@ import { client, account, ID } from '../../config/AppwriteSignUp';
 
 function SignUp({navigation}) {
 
-    useEffect(() => {
-        const checkSession = async () => {
-          try {
-            await account.get();
-            // If there's an active session, log out
-            await account.deleteSession("current");
-          } catch (error) {
-            // No active session found, no action needed
-            console.log("No active session found.");
-          }
-        };
       
-        checkSession();
-      }, []);
+       
         // HANDLE LOGIN
         const handleSignUp = async (values) => {
           // try {
@@ -51,20 +39,7 @@ function SignUp({navigation}) {
          const {firstName, lastName, address,  email, officerID,  phoneNumber, password, confirm } = values;
       
       
-          try {
-            const promise = account.create(ID, firstName, lastName, address,  email, officerID,  phoneNumber, password, confirm  );
-      
-      promise.then(function (response) {
-          console.log(response); // Success
-          navigation.replace('Login');
-      });
-      } catch (error) {
-        let errorMessage = 'An error occurred. Please try again.';
-        if (error.response) {
-          errorMessage = 'Invalid email or password.';
-        }
-        Alert.alert("Login Failed", errorMessage);
-          }
+        
         }
       
       
@@ -81,13 +56,13 @@ function SignUp({navigation}) {
 
     //VALIDATION SCHEMA
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required().label("firstName").nonNullable(),
-        lastName: Yup.string().required().label("lastName").nonNullable(),
+        firstName: Yup.string().label("firstName").nonNullable(),
+        lastName: Yup.string().label("lastName").nonNullable(),
         officerID: Yup.string().required().label().nonNullable(),
         address: Yup.string().required().label("address").nonNullable(),
         email: Yup.string().required().email().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format').label("Email").nonNullable(),
         phoneNumber: Yup.string()
-        .min(9)
+        .min(9, "Phone number must be atleast 8 numbers!!!")
         .required()
         .nonNullable(),
         password:  Yup.string().required('Password is required')
@@ -121,7 +96,7 @@ function SignUp({navigation}) {
 
             <Formik
             initialValues={{  firstName: '', lastName: '', address:'',  email: '', officerID: '',  phoneNumber:'', password:'', confirm: '' }}
-            onSubmit={handleSignUp}
+            //onSubmit={handleSignUp}
             validationSchema={validationSchema}
 
             children =  {({ handleChange, handleSubmit, errors, values }) => (
@@ -133,7 +108,7 @@ function SignUp({navigation}) {
                     <Text style={{fontSize: 19, color: colors.secondary}}>1</Text>
                    </View>
 
-                  <ScrollView style={{ width:'73%', }}>
+                  <ScrollView style={{ width:'80%', }}>
 
 
 
@@ -144,7 +119,7 @@ function SignUp({navigation}) {
                     placeholder='First Name'
                     values={values.firstName}
                     textContentType='name'
-                    autoCapitalize='none'
+                    autoCapitalize='sentences'
                     autoCorrect={false}
                     keyboardType='default'              
                     style={styles.entry}
@@ -166,7 +141,7 @@ function SignUp({navigation}) {
                     placeholder='Last Name'
                     values={values.lastName}
                     textContentType='name'
-                    autoCapitalize='none'
+                    autoCapitalize='sentences'
                     autoCorrect={false}
                     keyboardType='default'               
                     style={styles.entry}
@@ -217,7 +192,7 @@ function SignUp({navigation}) {
                     placeholder='P.O.BOX 0000, DAR ES SALAAM'
                     values={values.address}
                     textContentType='addressCity'
-                    autoCapitalize='characters'
+                    autoCapitalize='sentences'
                     autoCorrect={false}
                     keyboardType='default'              
                     style={styles.entry}
@@ -277,10 +252,10 @@ function SignUp({navigation}) {
                     <TextInputMask 
                     onChangeText={handleChange('phoneNumber')}
                     type={'custom'}
-                    // options={{
-                    //         mask: '(+255) ***-***-***'
-                    //         }}
-                    placeholder='(+255) ***-***-***'
+                    options={{
+                            mask: '+255 *** *** ***'
+                            }}
+                    placeholder='+255 *** *** ***'
                     textContentType='telephoneNumber'
                     keyboardType='phone-pad'
                     autoCapitalize='none'
@@ -289,6 +264,8 @@ function SignUp({navigation}) {
                     style={styles.entry}
                     />
                     </View>
+
+                    <Text  style = {{color: 'red'}} >{errors.phoneNumber}</Text>
 
                    
 
@@ -368,7 +345,7 @@ function SignUp({navigation}) {
                     
                     <TouchableOpacity
                     style={styles.button}
-                    onPress = {handleSubmit}    
+                    onPress = {() => navigation.navigate("FinishedReg")}    
                    // disabled={ values.firstName === '' || values.lastName === '' || values.officerID === '' || values.address === '' || values.email === '' || values.phoneNumber === '' || values.password === '' || values.confirm === '' }
                     
                     >

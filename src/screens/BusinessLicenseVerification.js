@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button } from 'react-native'
 import DocumentPicker, { types } from 'react-native-document-picker'
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 
 
@@ -10,27 +11,81 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { ImageBackground } from 'react-native'
 
 
-function BusinessLicenseVerification(props) {
+function BusinessLicenseVerification({navigation}) {
 
-  const selectDocument = async() => {
-    try{ const doc = await DocumentPicker.pick({
-      type: [types.pdf]
-    });
-     console.log(doc);}// API FOR SENDING THE DOCUMENT
-     catch {
-       if(DocumentPicker.isCancel(err)){
-         console.log("User cancelled the Upload", err);
-       }
-       else
-         console.log(err);
-     }
-   };
+
+
+  const [selectedDocument, setSelectedDocument] = useState(null);
+
+
+
+
+  const selectDocument = async () => {
+
+    try {
+      const doc = await DocumentPicker.pick({
+        type: [types.pdf],
+      });
+      setSelectedDocument(doc); // Store the selected document
+      console.log(doc); // Log the selected document
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log("User cancelled the upload", err);
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
+
+
+
+
+
+  const submitDocument = async () => {
+    if (selectedDocument) {
+      try {
+        // API call to submit the document
+        const formData = new FormData();
+        formData.append('document', {
+          uri: selectedDocument[0].uri,
+          type: selectedDocument[0].type,
+          name: selectedDocument[0].name,
+        });
+
+        const response = await fetch('YOUR_API_ENDPOINT', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const result = await response.json();
+        console.log(result);
+        alert('Document submitted successfully!');
+      } catch (err) {
+        console.log(err);
+        alert('Failed to submit document');
+      }
+    } else {
+      alert('Please select a document first');
+    }
+  };
+
  
    return (
      <SafeAreaView style={styles.safeArea}>
      <View style={styles.upperView} >  
+      <View>
+        <TouchableOpacity onPress={() => navigation.navigate("Main") }>
+            <MaterialCommunityIcons name="chevron-left" size={37} color={colors.black}/>
+        </TouchableOpacity>
+      </View>
+      <View>
        <Text style={{fontFamily: 'serif', fontSize:29, fontWeight: '800', color: colors.primary, }}>  Verification</Text>
        <Text style={{fontFamily: 'serif', color: colors.black, fontWeight: '600', fontSize: 17}}>     Upload Business License</Text>
+      </View>
      </View>
 
 
@@ -47,7 +102,7 @@ function BusinessLicenseVerification(props) {
 
       <View style={styles.lower2}>
       
-      <TouchableOpacity style={styles.search} onpress={selectDocument} >
+      <TouchableOpacity style={styles.search} onPress={selectDocument} >
         <ImageBackground  style={{height: 69, width: 70}} source={require('../assets/Uploader.png')}/>
 
       </TouchableOpacity>
@@ -78,7 +133,7 @@ function BusinessLicenseVerification(props) {
    upperView : {
    flex: 1,
    width: '99%',
-   flexDirection: 'column'
+   flexDirection: 'row'
    },
 
    lowerView : {

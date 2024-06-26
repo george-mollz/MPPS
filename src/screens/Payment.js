@@ -52,7 +52,7 @@ function Payment(props) {
                         </View>
 
                         <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.navigate('Login')} >
-                        <MaterialCommunityIcons name='dots-vertical' size={30} color={colors.black} />
+                        <MaterialCommunityIcons name='logout' size={30} color={colors.black} />
                         </TouchableOpacity>
 
             </View>

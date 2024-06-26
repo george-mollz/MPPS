@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Pressable, Platform } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Pressable, Platform, Button } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { fonts } from '../components/Font';
 import { colors } from '../components/colors';
@@ -108,9 +108,9 @@ export default function TransitForm({navigation}) {
 
   //creating categories for button toogle
   const woodType = [
-    { name: 'Hand wood' },
-    { name: 'Soft wood' },
-    { name: 'WoodPile' },
+    { name: 'Hard Wood' },
+    { name: 'Soft Wood' },
+    { name: 'Wood Pile' },
     { name: 'Wood Timber' },
   ];
   
@@ -139,10 +139,15 @@ export default function TransitForm({navigation}) {
   const submit = async(values) => {
     const {startPoint, endPoint, startDate, endDate, driverName, vehicleNumber} = values;
    try {
-
+    
+    console.log(values)
     
    } catch (error) {
-    
+    let errorMessage = 'An error occurred. Please try again.';
+  if (error.response) {
+    errorMessage = 'Try again';
+  }
+  Alert.alert("Fill once more", errorMessage);
    }
   };
 
@@ -161,6 +166,9 @@ export default function TransitForm({navigation}) {
     width: Yup.string().required().nonNullable(true),
     quantity: Yup.string().required().nonNullable(true),  
   });
+
+
+  
 
 
 
@@ -210,10 +218,10 @@ export default function TransitForm({navigation}) {
                 
                     <View style={{backgroundColor: colors.lightgray, width: "95.3%",  height: "90%",  borderRadius: 20,}}>
                       <Formik 
-                      initialValues={{startPoint:" ", endPoint:" ", startDate:" ", endDate:" ", driverName:" ", vehicleNumber:" "}}
+                      initialValues={{startPoint:" ", endPoint:" ", startDate:" ", endDate:" ", driverName:" ", vehicleNumber:" ", specie:" ", length: " ", width: " ", quantity: " " }}
                       validationSchema={validationSchema}
-                      onSubmit={submit}
-                      children= {({errors, values, handleSubmit}) => (
+                      onSubmit={(values) => console.log(values)}
+                      children= {({ values, handleSubmit, handleChange, handleReset}) => (
                         <ScrollView style={styles.miniContainers}> 
                         
                           {/*REGION SECTION*/}
@@ -230,7 +238,12 @@ export default function TransitForm({navigation}) {
                                             <MaterialCommunityIcons name="map-marker-outline" size={35} color={colors.black}/>
                                         
                                          
-                                            <TextInput style={styles.value}/>
+                                            <TextInput 
+                                            style={styles.value} 
+                                            value={values.startPoint}
+                                            onChange={handleChange("startPoint")}
+                                            
+                                            />
                                          </View>
 
                                   </View>
@@ -248,7 +261,12 @@ export default function TransitForm({navigation}) {
                                             <MaterialCommunityIcons name="map-marker-outline" size={35} color={colors.black}/>
                                         
                                          
-                                            <TextInput style={styles.value}/>
+                                            <TextInput 
+                                            style={styles.value} 
+                                            value={values.endPoint}
+                                            onChange={handleChange("endPoint")}
+                                            
+                                            />
                                          </View>
 
                                   </View>
@@ -295,7 +313,7 @@ export default function TransitForm({navigation}) {
                                                     <TextInput style={styles.value}
                                                     editable={false}
                                                     onPressIn={toggleDatepicker}
-                                                    value={startDate}
+                                                    value={values.startDate}
                                                     onChangeText={setStartDate}
 
                                                     />                                         
@@ -347,7 +365,7 @@ export default function TransitForm({navigation}) {
                                                     <TextInput style={styles.value}
                                                     editable={false}
                                                     onPressIn={toggleDatepicker1}
-                                                    value={endDate}
+                                                    value={values.endDate}
                                                     onChangeText={setEndDate}
 
                                                     />                                         
@@ -380,7 +398,14 @@ export default function TransitForm({navigation}) {
                                             <MaterialCommunityIcons name="card-account-details-outline" size={35} color={colors.black}/>
                                         
                                          
-                                            <TextInput style={styles.value}/>
+                                            <TextInput 
+                                            style={styles.value} 
+                                            value={values.driverName} 
+                                            onChange={handleChange("driverName")}
+                                            autoCapitalize='sentences'
+                                            keyboardType='default'
+                                            keyboardAppearance='default'
+                                            />
                                          </View>
 
                                   </View>
@@ -398,7 +423,13 @@ export default function TransitForm({navigation}) {
                                             <MaterialCommunityIcons name="truck" size={35} color={colors.black}/>
                                         
                                          
-                                            <TextInput style={styles.value}/>
+                                            <TextInput 
+                                            style={styles.value}
+                                            value={values.vehicleNumber}
+                                            placeholder='T*** AAA'
+                                            autoCapitalize='words'
+                                            onChange={handleChange("vehicleNumber")}
+                                            />
                                          </View>
 
                                   </View>
@@ -422,7 +453,7 @@ export default function TransitForm({navigation}) {
                             <View style={{flexDirection: "column", height: "30%", borderBottomWidth: 2, borderColor: colors.black, borderStyle: "dashed"}}>
                               <View style={{flexDirection: "row", height: "50%", alignItems: "center", justifyContent: "space-around"}}>  
                                   <View style={styles.cat}>
-                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]}>
+                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]} onPress={() => toggleWoodType('Hard Wood')}>
                                       <Text style={styles.catText}>Hard wood</Text>
                                       <MaterialCommunityIcons name="plus" size={30} color={colors.black}/>
                                        
@@ -431,7 +462,7 @@ export default function TransitForm({navigation}) {
                                   </View>
 
                                   <View style={styles.cat}>
-                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]}>
+                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]} onPress={() => toggleWoodType('Soft Wood')}>
                                       <Text style={styles.catText}>Soft Wood</Text>
                                       <MaterialCommunityIcons name="plus" size={30} color={colors.black}/>
                                     </TouchableOpacity>
@@ -445,7 +476,7 @@ export default function TransitForm({navigation}) {
                               >
 
                                   <View style={styles.cat}>
-                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]}>
+                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]} onPress={() => toggleWoodType('Wood Pile')}>
                                       <Text style={styles.catText}>Wood pile</Text>
                                       <MaterialCommunityIcons name="plus" size={30} color={colors.black}/>
                                     </TouchableOpacity>
@@ -453,7 +484,7 @@ export default function TransitForm({navigation}) {
                                   </View>
 
                                   <View style={styles.cat}>
-                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]}>
+                                    <TouchableOpacity style={[styles.contain,{ justifyContent: "space-around"}]} onPress={() => toggleWoodType('Wood Timber')}>
                                       <View>
                                         <Text style={styles.catText}>Wood timber</Text>
                                       </View>
@@ -469,11 +500,288 @@ export default function TransitForm({navigation}) {
 
                             </View>
 
+                            
+
+                            {/*INVISIBLE SECTION*/}
+                             {/*SELECTED FIELDS*/}
+                            
+                            <View style={styles.expandable_view}>
+
+{expandedWoodType === 'Hard Wood' && (
+    <View  >
+
+
+
+        <View style={{flexDirection: 'row', width: 300 }}>
+
+            <View  style={{flexDirection: 'column', marginLeft: 15, marginTop: 2 }}>
+                <View>
+                    <Text style={styles.expandable_txt_label}>
+                        Specie
+                    </Text>
+
+                    <TextInput placeholder="Mninga" style={styles.expandable_txtInput}value={values.specie} />
+                </View>
+
+                <View style={{marginTop: 5}}>
+                    <Text style={styles.expandable_txt_label}>
+                        Width
+                    </Text>
+
+                    <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.width}/>
+                </View>
+            </View>
+
+
+
+
+
+
+
+            <View  style={{flexDirection: 'column', marginLeft: 60, marginTop: 2}}>
+                <View>
+                    <Text style={styles.expandable_txt_label}>
+                        Length
+                    </Text>
+
+                    <TextInput placeholder="00.00" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.length}/>
+                </View>
+
+                <View style={{marginTop: 5}}>
+                    <Text style={styles.expandable_txt_label}>
+                        Quantity
+                    </Text>
+
+                    <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.quantity} />
+                </View>
+            </View>
+
+
+
+
+        </View>
+
+        
+
+    </View>
+        )}
+
+
+
+
+{expandedWoodType === 'Wood Pile' && (
+            <View  >
+
+
+
+            <View style={{flexDirection: 'row', width: 300, justifyContent: 'center', alignItems: 'center' }}>
+
+                <View  style={{flexDirection: 'column', marginBottom: 52, marginRight: 30 }}>
+                    <View>
+                        <Text style={styles.expandable_txt_label}>
+                            Specie
+                        </Text>
+
+                        <TextInput placeholder="Specie" style={styles.expandable_txtInput} />
+                    </View>
+
+                
+                </View>
+
+
+
+
+
+
+
+                <View  style={{flexDirection: 'column', marginLeft: 20, marginBottom: 53}}>
+                        
+                    <View style={{marginTop: 5,}}>
+                        <Text style={styles.expandable_txt_label}>
+                            Quantity
+                        </Text>
+
+                        <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+                </View>
+
+
+
+
+            </View>
+
+            
+
+        </View>
+        )}
+
+
+
+
+{expandedWoodType === 'Soft Wood' && (
+            <View  >
+
+
+
+            <View style={{flexDirection: 'row', width: 300 }}>
+
+                <View  style={{flexDirection: 'column', marginLeft: 15, marginTop: 2 }}>
+                    <View>
+                        <Text style={styles.expandable_txt_label}>
+                            Specie
+                        </Text>
+
+                        <TextInput placeholder="Mninga" style={styles.expandable_txtInput} />
+                    </View>
+
+                    <View style={{marginTop: 5}}>
+                        <Text style={styles.expandable_txt_label}>
+                            Width
+                        </Text>
+
+                        <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+                </View>
+
+
+
+
+
+
+
+                <View  style={{flexDirection: 'column', marginLeft: 60, marginTop: 2}}>
+                    <View>
+                        <Text style={styles.expandable_txt_label}>
+                            Length
+                        </Text>
+
+                        <TextInput placeholder="00.00" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default'/>
+                    </View>
+
+                    <View style={{marginTop: 5}}>
+                        <Text style={styles.expandable_txt_label}>
+                            Quantity
+                        </Text>
+
+                        <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+                </View>
+
+
+
+
+            </View>
+
+            
+
+        </View>
+        )}
+
+
+
+{expandedWoodType === 'Wood Timber' && (
+            <View  >
+
+
+
+            <View style={{flexDirection: 'row', width: "100%", }}>
+
+                <View  style={{flexDirection: 'column', marginLeft: 15, marginTop: 2,  }}>
+                    <View>
+                        <Text style={styles.expandable_txt_label}>
+                            Specie
+                        </Text>
+
+                        <TextInput placeholder="Muarobaini" style={styles.expandable_txtInput} />
+                    </View>
+
+                    <View style={{marginTop: 5}}>
+                        <Text style={styles.expandable_txt_label}>
+                            Width
+                        </Text>
+
+                        <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+
+                    <View style={{marginTop: 5}}>
+                        <Text style={styles.expandable_txt_label}>
+                            Breadth
+                        </Text>
+
+                        <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+                </View>
+
+
+
+
+
+
+
+                <View  style={{flexDirection: 'column', marginLeft: 60, marginTop: 9}}>
+                    <View>
+                        <Text style={styles.expandable_txt_label}>
+                            Length
+                        </Text>
+
+                        <TextInput placeholder="00.00" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+
+                    <View style={{marginTop: 5}}>
+                        <Text style={styles.expandable_txt_label}>
+                            Quantity
+                        </Text>
+
+                        <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                    </View>
+                </View>
+
+
+
+
+            </View>
+
+            
+
+        </View>
+    )}
+
+
+
+</View>
+
+
+                            <View style={{width: "100%", height: "20%", flexDirection: "row", justifyContent: "space-around", marginTop: 5}}>
+
+                              <TouchableOpacity style={{width: "20%", height: "30%", backgroundColor: colors.palegray, alignItems:"center", borderRadius: 20}} 
+                              onPress={() => {handleReset}}
+                              >
+                                <Text style={{fontSize: 16, color: colors.black, fontWeight: "600"}} onPress={handleReset}> 
+                                  CLEAR
+                                </Text>
+                              </TouchableOpacity>
+
+                              <TouchableOpacity style={{width: "20%", height: "30%", backgroundColor: colors.primary,  alignItems:"center", borderRadius: 20}} onPress={handleSubmit}>
+                                <Text style={{fontSize: 16, color: colors.white, fontWeight: "600"}}>
+                                   SUBMIT
+                                </Text>
+                              </TouchableOpacity>
+                            </View>
+
+
+
+
+
+
+
+
                           </View>
 
 
 
-                          {/*SELECTED FIELDS*/}
+                         
+
+                          
 
                         </ScrollView>
 
@@ -486,14 +794,7 @@ export default function TransitForm({navigation}) {
 
                       
 
-                          {
-
-                          <View style={{backgroundColor: colors.lightgray, width:"97%", }}>
-
-                          </View>
-
-                          }
-
+                         
                     </View>
              
       </View>
@@ -582,5 +883,133 @@ const styles = StyleSheet.create({
     
 
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+row: {
+    flexDirection: 'row'
+},
+
+column: {
+    flexDirection: 'column',
+}, 
+
+column1: {
+    flexDirection: 'column',
+    marginLeft: 23,
+},
+
+label_input: {
+    marginLeft: 15,
+    marginTop: 15,
+},
+
+
+
+
+
+TextInput: {
+    width: 129,
+},
+
+cargo: {
+    width: 370,
+    backgroundColor: colors.white,
+    marginLeft: 11,
+    marginTop: 4,
+    borderRadius: 20
+},
+
+dateButton: {
+    height:50,
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 15,
+    backgroundColor: colors.blue
+},
+
+pickerButton: {
+    paddingHorizontal: 20, 
+},
+
+
+
+cargo_label: { 
+    fontSize: 15,
+    paddingLeft: 8,
+     
+},
+
+cargo_column: {
+    height: 40,
+    paddingLeft:16,
+    paddingTop:9,
+    
+},
+
+cargo_column1: {
+    height: 40,
+    paddingLeft: 13,
+    paddingTop:9,
+    
+},
+
+column_spacing: {
+    marginTop : 9,
+},
+
+container_label: {
+    height: 29,
+    width: 164,
+    backgroundColor:  colors.secondary,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent:'center'
+},
+
+expandable_view: {
+    marginTop: 4, 
+    width: "90%", 
+    marginLeft: 16, 
+    borderRadius: 40, 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    //backgroundColor: colors.red,
+},
+
+expandable_txt_label: {
+    fontSize: 22,
+    color: colors.black,
+
+
+},
+
+expandable_txtInput: {
+    
+    width: 120,
+    marginTop: 5,
+    height: 40,
+    backgroundColor: colors.palegray,
+    borderRadius: 30,
+    alignItems:"center",
+    justifyContent:"center",
+},
+
+
+
 
 })

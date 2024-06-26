@@ -12,6 +12,7 @@ import Getstarted from './src/screens/Getstarted';
 import AppNav from './src/components/AppNav';
 import BusinessLicenseVerification from './src/screens/BusinessLicenseVerification';
 import TransitForm from './src/screens/TransitForm';
+import Main from './src/screens/Main';
 
 
 
@@ -35,7 +36,7 @@ export default function App() {
         <Stack.Screen name='AppNav'   component={AppNav} />   
         <Stack.Screen name='TransitForm'   component={TransitForm} />   
         <Stack.Screen name='BusinessLicenseVerification'   component={BusinessLicenseVerification} />  
-      
+        <Stack.Screen name='Main'   component={Main} /> 
        
      </Stack.Navigator>
   );
@@ -44,11 +45,11 @@ export default function App() {
 
 
   return (  
-    // <NavigationContainer>
+    <NavigationContainer>
       
-    //   <StackNavigator />
-    // </NavigationContainer>   
-    <TransitForm />
+      <StackNavigator />
+    </NavigationContainer>   
+   
   );
 }
 

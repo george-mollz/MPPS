@@ -40,18 +40,18 @@ export default function Main({navigation}) {
           <View style={styles.profile}> 
 
               <TouchableOpacity style={styles.dp}>
-                
+                <MaterialCommunityIcons name="account" size={35} color={colors.black}/>
               
 
               </TouchableOpacity>
 
               <View>
-                  <Text style={{marginLeft: 8, fontWeight:'600', color: colors.black, fontFamily: 'serif'}}>{greeting}</Text>    
-                  <Text style={{fontSize: 23, fontWeight: '600', color: colors.black,  fontFamily:'serif'}}> George</Text>    
+                  <Text style={{marginLeft: 8, fontWeight:'700', color: colors.black, fontFamily: 'serif'}}>{greeting}</Text>    
+                  <Text style={{fontSize: 23, fontWeight: '700', color: colors.black,  fontFamily:'serif'}}> George</Text>    
               </View>
 
-              <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.navigate('Login')} >
-                <MaterialCommunityIcons name='dots-vertical' size={30} color={colors.black} />
+              <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.replace('Login')} >
+                <MaterialCommunityIcons name='logout' size={30} color={colors.black} />
               </TouchableOpacity>
 
           </View>
@@ -64,13 +64,13 @@ export default function Main({navigation}) {
        
               <ImageBackground style={styles.startH} source={require('../assets/Truck.png')}>
 
-                      <TouchableOpacity
+                      {/* <TouchableOpacity
                       style={{ justifyContent:'center', alignItems:'center', marginLeft: 170, marginBottom: 10, marginLeft:237, width: 150, height: 35, backgroundColor: colors.primary, borderRadius: 35, flexDirection: "row"}}
                       onPress = {(onPress) = console.log("Verifying")}
                       >
                         <Text style={{color: colors.white, paddingRight: 13, fontSize:18}}>Start here</Text>
                         <Image style={{width:25, height:19}} source={require('../assets/Arrow.png')}/>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
 
               </ImageBackground>
              
@@ -218,6 +218,8 @@ const styles = StyleSheet.create({
        width: 50,
        height:50,
        backgroundColor: colors.primary,
+       justifyContent: "center",
+       alignItems: "center"
      },
    
      profile: {
