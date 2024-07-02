@@ -2,7 +2,9 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/redux/store';
 
 
 import Login from './src/screens/Login';
@@ -13,6 +15,7 @@ import AppNav from './src/components/AppNav';
 import BusinessLicenseVerification from './src/screens/BusinessLicenseVerification';
 import TransitForm from './src/screens/TransitForm';
 import Main from './src/screens/Main';
+import History from './src/screens/History';
 
 
 
@@ -37,6 +40,7 @@ export default function App() {
         <Stack.Screen name='TransitForm'   component={TransitForm} />   
         <Stack.Screen name='BusinessLicenseVerification'   component={BusinessLicenseVerification} />  
         <Stack.Screen name='Main'   component={Main} /> 
+        <Stack.Screen name='History'   component={History} /> 
        
      </Stack.Navigator>
   );
@@ -45,10 +49,15 @@ export default function App() {
 
 
   return (  
-    <NavigationContainer>
-      
-      <StackNavigator />
-    </NavigationContainer>   
+
+     // <Provider store={store}>
+    //      <PersistGate loading={null} persistor={persistor}>  
+                      <NavigationContainer>
+                        
+                        <StackNavigator />
+                      </NavigationContainer>   
+    //      </PersistGate>
+    //  </Provider>
    
   );
 }

@@ -33,10 +33,11 @@ export default function TransitForm({navigation}) {
     if (type == "set") {
     const currentDate = selectedDate;
     setStart(currentDate);
+    setStartDate(currentDate.toDateString())
 
             if(Platform.OS === 'android'){
                 toggleDatepicker();
-                setStartDate(currentDate.toDateString());
+                // setStartDate(currentDate.toDateString());
                             
             }
                 
@@ -71,10 +72,10 @@ export default function TransitForm({navigation}) {
     if (type == "set") {
         const currentDate1 = selectedDate;
         setEnd(currentDate1);
+        setEndDate(currentDate1.toDateString());
 
         if(Platform.OS === 'android'){
             toggleDatepicker1();
-            setEndDate(currentDate1.toDateString());
 
         }
             
@@ -216,7 +217,7 @@ export default function TransitForm({navigation}) {
 
               
                 
-                    <View style={{backgroundColor: colors.lightgray, width: "95.3%",  height: "90%",  borderRadius: 20,}}>
+                    <View style={{backgroundColor: colors.lightgray, width: "95.3%",  height: "99%",  borderRadius: 20,}}>
                       <Formik 
                       initialValues={{startPoint:" ", endPoint:" ", startDate:" ", endDate:" ", driverName:" ", vehicleNumber:" ", specie:" ", length: " ", width: " ", quantity: " " }}
                       validationSchema={validationSchema}
@@ -242,6 +243,8 @@ export default function TransitForm({navigation}) {
                                             style={styles.value} 
                                             value={values.startPoint}
                                             onChange={handleChange("startPoint")}
+                                            placeholder='ARUSHA'
+                                            placeholderTextColor={colors.black}
                                             
                                             />
                                          </View>
@@ -265,7 +268,8 @@ export default function TransitForm({navigation}) {
                                             style={styles.value} 
                                             value={values.endPoint}
                                             onChange={handleChange("endPoint")}
-                                            
+                                            placeholder='DAR ES SALAAM'
+                                            placeholderTextColor={colors.black}
                                             />
                                          </View>
 
@@ -313,7 +317,7 @@ export default function TransitForm({navigation}) {
                                                     <TextInput style={styles.value}
                                                     editable={false}
                                                     onPressIn={toggleDatepicker}
-                                                    value={values.startDate}
+                                                    value={startDate}
                                                     onChangeText={setStartDate}
 
                                                     />                                         
@@ -359,16 +363,22 @@ export default function TransitForm({navigation}) {
                                         onPress={toggleDatepicker1}
                                         >
                                             <View style={styles.input}>
-                                                <View style={styles.icons}>
+                                                <View style={[styles.icons,{ flexDirection: 'row'}]}>
+                                                  <View style={{flex:1}}>
                                                     <MaterialCommunityIcons name='calendar' size={25}  color={colors.black}/>
-                                                
+                                                  </View>
+                                                  
+                                                  <View style={{flex:8}}>
                                                     <TextInput style={styles.value}
                                                     editable={false}
                                                     onPressIn={toggleDatepicker1}
-                                                    value={values.endDate}
+                                                    value={endDate}
                                                     onChangeText={setEndDate}
+                                                    
 
-                                                    />                                         
+                                                    />                                  
+
+                                                  </View>
                                                 </View>
                                                 
                                             </View>
@@ -427,7 +437,8 @@ export default function TransitForm({navigation}) {
                                             style={styles.value}
                                             value={values.vehicleNumber}
                                             placeholder='T*** AAA'
-                                            autoCapitalize='words'
+                                            placeholderTextColor={colors.black}
+                                            autoCapitalize='characters'
                                             onChange={handleChange("vehicleNumber")}
                                             />
                                          </View>
@@ -520,7 +531,7 @@ export default function TransitForm({navigation}) {
                         Specie
                     </Text>
 
-                    <TextInput placeholder="Mninga" style={styles.expandable_txtInput}value={values.specie} />
+                    <TextInput placeholder="Mninga" placeholderTextColor={colors.black} style={styles.expandable_txtInput} value={values.specie} onChange={handleChange('specie')}/>
                 </View>
 
                 <View style={{marginTop: 5}}>
@@ -528,7 +539,7 @@ export default function TransitForm({navigation}) {
                         Width
                     </Text>
 
-                    <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.width}/>
+                    <TextInput placeholder="00.00" placeholderTextColor={colors.black}  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.width} onChange={handleChange('width')}/>
                 </View>
             </View>
 
@@ -544,7 +555,7 @@ export default function TransitForm({navigation}) {
                         Length
                     </Text>
 
-                    <TextInput placeholder="00.00" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.length}/>
+                    <TextInput placeholder="00.00" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.length} onChange={handleChange('length')}/>
                 </View>
 
                 <View style={{marginTop: 5}}>
@@ -552,7 +563,7 @@ export default function TransitForm({navigation}) {
                         Quantity
                     </Text>
 
-                    <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.quantity} />
+                    <TextInput placeholder="0" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' value={values.quantity} onChange={handleChange('quantity')}/>
                 </View>
             </View>
 
@@ -582,7 +593,7 @@ export default function TransitForm({navigation}) {
                             Specie
                         </Text>
 
-                        <TextInput placeholder="Specie" style={styles.expandable_txtInput} />
+                        <TextInput placeholder="Specie" placeholderTextColor={colors.black} style={styles.expandable_txtInput} />
                     </View>
 
                 
@@ -601,7 +612,7 @@ export default function TransitForm({navigation}) {
                             Quantity
                         </Text>
 
-                        <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="0" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
                 </View>
 
@@ -631,7 +642,7 @@ export default function TransitForm({navigation}) {
                             Specie
                         </Text>
 
-                        <TextInput placeholder="Mninga" style={styles.expandable_txtInput} />
+                        <TextInput placeholder="Mninga" placeholderTextColor={colors.black} style={styles.expandable_txtInput} />
                     </View>
 
                     <View style={{marginTop: 5}}>
@@ -639,7 +650,7 @@ export default function TransitForm({navigation}) {
                             Width
                         </Text>
 
-                        <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="00.00" placeholderTextColor={colors.black}  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
                 </View>
 
@@ -655,7 +666,7 @@ export default function TransitForm({navigation}) {
                             Length
                         </Text>
 
-                        <TextInput placeholder="00.00" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default'/>
+                        <TextInput placeholder="00.00" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default'/>
                     </View>
 
                     <View style={{marginTop: 5}}>
@@ -663,7 +674,7 @@ export default function TransitForm({navigation}) {
                             Quantity
                         </Text>
 
-                        <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="0" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
                 </View>
 
@@ -692,7 +703,7 @@ export default function TransitForm({navigation}) {
                             Specie
                         </Text>
 
-                        <TextInput placeholder="Muarobaini" style={styles.expandable_txtInput} />
+                        <TextInput placeholder="Muarobaini" placeholderTextColor={colors.black} style={styles.expandable_txtInput} />
                     </View>
 
                     <View style={{marginTop: 5}}>
@@ -700,7 +711,7 @@ export default function TransitForm({navigation}) {
                             Width
                         </Text>
 
-                        <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="00.00" placeholderTextColor={colors.black}  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
 
                     <View style={{marginTop: 5}}>
@@ -708,7 +719,7 @@ export default function TransitForm({navigation}) {
                             Breadth
                         </Text>
 
-                        <TextInput placeholder="00.00"  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="00.00" placeholderTextColor={colors.black}  style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
                 </View>
 
@@ -724,7 +735,7 @@ export default function TransitForm({navigation}) {
                             Length
                         </Text>
 
-                        <TextInput placeholder="00.00" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="00.00" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
 
                     <View style={{marginTop: 5}}>
@@ -732,7 +743,7 @@ export default function TransitForm({navigation}) {
                             Quantity
                         </Text>
 
-                        <TextInput placeholder="0" style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
+                        <TextInput placeholder="0" placeholderTextColor={colors.black} style={styles.expandable_txtInput} keyboardType='numeric' keyboardAppearance='default' />
                     </View>
                 </View>
 
@@ -753,7 +764,7 @@ export default function TransitForm({navigation}) {
 
                             <View style={{width: "100%", height: "20%", flexDirection: "row", justifyContent: "space-around", marginTop: 5}}>
 
-                              <TouchableOpacity style={{width: "20%", height: "30%", backgroundColor: colors.palegray, alignItems:"center", borderRadius: 20}} 
+                              <TouchableOpacity style={{width: "20%", height: "50%", backgroundColor: colors.palegray, justifyContent: "center", alignItems:"center", borderRadius: 20}} 
                               onPress={() => {handleReset}}
                               >
                                 <Text style={{fontSize: 16, color: colors.black, fontWeight: "600"}} onPress={handleReset}> 
@@ -761,7 +772,7 @@ export default function TransitForm({navigation}) {
                                 </Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity style={{width: "20%", height: "30%", backgroundColor: colors.primary,  alignItems:"center", borderRadius: 20}} onPress={handleSubmit}>
+                              <TouchableOpacity style={{width: "20%", height: "50%", backgroundColor: colors.primary, justifyContent: "center", alignItems:"center", borderRadius: 20}} onPress={handleSubmit}>
                                 <Text style={{fontSize: 16, color: colors.white, fontWeight: "600"}}>
                                    SUBMIT
                                 </Text>
@@ -846,7 +857,9 @@ const styles = StyleSheet.create({
 
   value: {
    // backgroundColor:colors.blue,
-    width: "80%"
+    width: "80%",
+    color: colors.black,
+    
   },
 
   category: {
@@ -1007,6 +1020,7 @@ expandable_txtInput: {
     borderRadius: 30,
     alignItems:"center",
     justifyContent:"center",
+    color : colors.black
 },
 
 

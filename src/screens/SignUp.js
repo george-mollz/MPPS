@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import {Formik} from 'formik';
 import {MaterialCommunityIcons } from 'react-native-vector-icons';
 import { colors } from '../components/colors';
-
+import axios from 'axios';
 
 
 
@@ -17,30 +17,18 @@ function SignUp({navigation}) {
       
        
         // HANDLE LOGIN
-        const handleSignUp = async (values) => {
-          // try {
-          //   const response = await axios.post('https://your-api-endpoint/login', {
-          //     email,
-          //     password,
-          //   });
-      
-          //   if (response.data.token) {
-          //     // Store the token in AsyncStorage for future use
-          //     await AsyncStorage.setItem('authToken', response.data.token);
-          //     navigation.navigate('Main'); // Navigate to the home screen
-          //   } else {
-          //     setError('Invalid email or password');
-          //   }
-          // } catch (error) {
-          //   console.error(error);
-          //   setError('An error occurred. Please try again later.');
-          // }
-      
-         const {firstName, lastName, address,  email, officerID,  phoneNumber, password, confirm } = values;
-      
-      
-        
-        }
+        const handleSignUp = (values, { setSubmitting }) => {
+            axios.post('http://your-backend-api.com/api/users/', values)
+              .then(response => {
+                console.log(response.data);
+                setSubmitting(false);
+                navigation.navigate('Login');
+              })
+              .catch(error => {
+                console.error(error);
+                setSubmitting(false);
+              });
+            }
       
       
 
@@ -58,7 +46,7 @@ function SignUp({navigation}) {
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().label("firstName").nonNullable(),
         lastName: Yup.string().label("lastName").nonNullable(),
-        officerID: Yup.string().required().label().nonNullable(),
+        companyName: Yup.string().required().label("Company name").nonNullable(),
         address: Yup.string().required().label("address").nonNullable(),
         email: Yup.string().required().email().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format').label("Email").nonNullable(),
         phoneNumber: Yup.string()
@@ -95,8 +83,8 @@ function SignUp({navigation}) {
          <View style={styles.container1}>
 
             <Formik
-            initialValues={{  firstName: '', lastName: '', address:'',  email: '', officerID: '',  phoneNumber:'', password:'', confirm: '' }}
-            //onSubmit={handleSignUp}
+            initialValues={{  firstName: '', lastName: '', address:'',  email: '', companyName: '',  phoneNumber:'', password:'', confirm: '' }}
+            // onSubmit={handleSignUp}
             validationSchema={validationSchema}
 
             children =  {({ handleChange, handleSubmit, errors, values }) => (
@@ -108,7 +96,7 @@ function SignUp({navigation}) {
                     <Text style={{fontSize: 19, color: colors.secondary}}>1</Text>
                    </View>
 
-                  <ScrollView style={{ width:'80%', }}>
+                  <ScrollView style={{ width:'73%',}}>
 
 
 
@@ -117,6 +105,7 @@ function SignUp({navigation}) {
                     <TextInput 
                     onChangeText={handleChange('First Name')}
                     placeholder='First Name'
+                    placeholderTextColor={colors.black}
                     values={values.firstName}
                     textContentType='name'
                     autoCapitalize='sentences'
@@ -138,7 +127,8 @@ function SignUp({navigation}) {
                     
                     <TextInput 
                     onChangeText={handleChange('Last Name')}
-                    placeholder='Last Name'
+                    placeholder='Sur Name'
+                    placeholderTextColor={colors.black}
                     values={values.lastName}
                     textContentType='name'
                     autoCapitalize='sentences'
@@ -165,17 +155,19 @@ function SignUp({navigation}) {
                     <View style = {styles.input}>   
                     
                     <TextInput 
-                    onChangeText={handleChange('officerID')}
-                    placeholder='TFS-Officer ID'
-                    values={values.officerID}
+                    onChangeText={handleChange('companyName')}
+                    placeholder='Company Name'
+                    placeholderTextColor={colors.black}
+                    values={values.companyName}
                     autoCorrect={true}
-                    keyboardType='number-pad'              
+                    keyboardType='default'   
+                    autoCapitalize           
                     style={styles.entry}
                     />        
                     
                     </View>
 
-                   <Text  style = {{color: colors.red}} >{errors.officerID}</Text>
+                   <Text  style = {{color: colors.red}} >{errors.companyName}</Text>
 
 
 
@@ -190,9 +182,10 @@ function SignUp({navigation}) {
                     <TextInput 
                     onChangeText={handleChange('address')}
                     placeholder='P.O.BOX 0000, DAR ES SALAAM'
+                    placeholderTextColor={colors.black}
                     values={values.address}
                     textContentType='addressCity'
-                    autoCapitalize='sentences'
+                    autoCapitalize='characters'
                     autoCorrect={false}
                     keyboardType='default'              
                     style={styles.entry}
@@ -221,6 +214,7 @@ function SignUp({navigation}) {
                     icon = 'mail'
                     onChangeText={handleChange('email')}
                     placeholder='Email'
+                    placeholderTextColor={colors.black}
                     values={values.email}
                     textContentType='emailAddress'
                     autoCapitalize='none'
@@ -256,6 +250,7 @@ function SignUp({navigation}) {
                             mask: '+255 *** *** ***'
                             }}
                     placeholder='+255 *** *** ***'
+                    placeholderTextColor={colors.black}
                     textContentType='telephoneNumber'
                     keyboardType='phone-pad'
                     autoCapitalize='none'
@@ -276,6 +271,7 @@ function SignUp({navigation}) {
                     <TextInput 
                     onChangeText={handleChange('password')}
                     placeholder='Password'
+                    placeholderTextColor={colors.black}
                     secureTextEntry
                     textContentType='password'
                     autoCapitalize='none'
@@ -303,6 +299,7 @@ function SignUp({navigation}) {
                     <TextInput 
                     onChangeText={handleChange('confirm')}
                     placeholder=' Confirm Password'
+                    placeholderTextColor={colors.black}
                     secureTextEntry
                     textContentType='password'
                     autoCapitalize='none'
@@ -492,7 +489,7 @@ const styles = StyleSheet.create({
         borderColor: colors.tertiary,
         width: 170,
         height: 50,
-        marginTop: 5,
+        
         
       },
    

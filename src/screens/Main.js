@@ -51,7 +51,7 @@ export default function Main({navigation}) {
               </View>
 
               <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.replace('Login')} >
-                <MaterialCommunityIcons name='logout' size={30} color={colors.black} />
+                <MaterialCommunityIcons name='logout' size={35} color={colors.black} />
               </TouchableOpacity>
 
           </View>
@@ -150,12 +150,12 @@ export default function Main({navigation}) {
                                 
                       
                                    
-                                        <TouchableOpacity style={styles.history}  >
+                                        <View style={styles.history}  >
                                               <Text style={{fontSize: 17, color: colors.secondary, }}>    Completed Deliveries</Text>   
-                                              <ImageBackground style={{height: 40, width: 40, marginLeft:135, justifyContent: 'center', alignItems: 'center'}} source={require("../assets/circle.png")}>
+                                              <View style={{height: 40, width: 40, marginLeft:135, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, borderRadius: 50}} source={require("../assets/circle.png")}>
                                                   <Text style={{fontSize: 20, fontWeight:'500', fontFamily: 'serif',color: colors.black}}>5</Text>
-                                              </ImageBackground>                                     
-                                        </TouchableOpacity>  
+                                              </View>                                     
+                                        </View>  
                                 
             </View>   
     </View>

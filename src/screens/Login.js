@@ -64,13 +64,13 @@ const handleLogin = async (values) => {
        <Formik 
        initialValues={{email: '', password: ''}}
        validationSchema={validationSchema}
-       onSubmit={handleLogin}
+       //onSubmit={handleLogin}
        children={({ handleChange, handleSubmit, handleBlur, errors, values, isValid }) => (
         <>
           <Text style={styles.heading}>Login</Text>
-            <View style={styles.label}>
+            {/* <View style={styles.label}>
               <Text style={{fontSize: 17, color: colors.black, fontWeight: '600', fontFamily: 'serif'}}>Email</Text>
-            </View>
+            </View> */}
 
             <View style={styles.input}>
 
@@ -80,6 +80,7 @@ const handleLogin = async (values) => {
                 style={styles.textInput}
                 onChangeText={handleChange('email')}
                 placeholder='Email'
+                placeholderTextColor={colors.black}
                 value={values.email}
                 textContentType='emailAddress'
                 autoCapitalize='none'
@@ -91,15 +92,17 @@ const handleLogin = async (values) => {
             </View>
 
             <Text style={{ color: colors.red }}>{errors.email}</Text>
-            <View style={styles.label}>
+            {/* <View style={styles.label}>
               <Text style={{fontSize: 17, color: colors.black, fontWeight: '600',  fontFamily: 'serif'}}>Password</Text>
-            </View>
+            </View> */}
             <View style={styles.input}>
+              
               
               <TextInput
                 style={styles.textInput}
                 onChangeText={handleChange('password')}
                 placeholder='Password'
+                placeholderTextColor={colors.black}
                 secureTextEntry
                 textContentType='password'
                 autoCapitalize='none'

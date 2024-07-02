@@ -103,11 +103,12 @@ function BusinessLicenseVerification({navigation}) {
       <View style={styles.lower2}>
       
       <TouchableOpacity style={styles.search} onPress={selectDocument} >
-        <ImageBackground  style={{height: 69, width: 70}} source={require('../assets/Uploader.png')}/>
-
+       <MaterialCommunityIcons name="upload" size={50} color={colors.secondary} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.Submit}>
+      <TouchableOpacity style={styles.Submit} 
+     // onPress={submitDocument}
+      >
             <Text style={styles.SubmitText}>
               Submit
             </Text>

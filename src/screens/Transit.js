@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet,  TouchableOpacity} from 'react-native';
 import { colors } from '../components/colors';
-
+import Route from './Route';
 
 
 
@@ -20,7 +20,7 @@ function Transit({navigation}) {
             </View>
 
             <View  style={styles.wrapper}>
-                <Text style={{paddingLeft: 18, fontSize: 18}}>
+                <Text style={{paddingLeft: 18, fontSize: 18, fontWeight: '500', color: colors.black,}}>
                     Enter details
                 </Text>
 
@@ -32,6 +32,11 @@ function Transit({navigation}) {
                     </Text>
                 </TouchableOpacity>
             </View>
+
+
+            {/* <View>
+                <Route checkpoints={checkpoints} />
+            </View> */}
             
         </SafeAreaView>
     );

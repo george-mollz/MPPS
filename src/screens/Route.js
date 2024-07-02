@@ -6,14 +6,10 @@ import { StyleSheet, View } from 'react-native';
 
 
 
-export default function App() {
+export default function Route(){
+  const [checkpoints, setCheckpoints] = useState([]);
 
-   const [drop, setDrop] = useState(false);
-
-   toogleDrop = () => {
-
-   };
-
+  
 
    const INITIAL_REGION = {
     latitude: -6.8165,
@@ -24,6 +20,8 @@ export default function App() {
 
 
   return (
+
+    
     <View style={styles.container}>
       <MapView style={styles.map}
        initialRegion={INITIAL_REGION} 
@@ -35,7 +33,13 @@ export default function App() {
         
        
       >
-      
+        {checkpoints.map(checkpoint => (
+          <Marker
+            key={checkpoint.id}
+            coordinate={{ latitude: checkpoint.latitude, longitude: checkpoint.longitude }}
+            title={checkpoint.name}
+          />
+        ))}
       
       </ MapView>
     </View>
