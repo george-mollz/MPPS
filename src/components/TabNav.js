@@ -23,7 +23,7 @@ const Tab = createBottomTabNavigator();
 
 
 
-function AppNav(props) {
+function TabNav(props) {
     return (
         <Tab.Navigator
 
@@ -88,4 +88,4 @@ function AppNav(props) {
     );
 }
 
-export default AppNav;
+export default TabNav;

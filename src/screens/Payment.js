@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Alert, Modal, TextInput  } from 'react-native';
+import { SafeAreaView, ScrollView ,Text, StyleSheet, View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Alert, Modal, TextInput  } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../components/colors';
 import { fonts } from '../components/Font';
+
+import { useUser } from '../context/UserContext';
 
 function Payment({navigation}) {
 
@@ -64,13 +66,14 @@ function Payment({navigation}) {
     ];
 
     const paymentHistory= [
-      {id: 1, date: "16/05/24", route: "Mwz-Sing", cost:"" },
-      {id: 2, date: "18/05/24", route: "Ars-Dar", cost:"" },
-      {id: 3, date: "21/06/24", route: "Iri-Dom", cost:"" },
-      // {id: 4, date: "25/05/24", route: "", cost:"" },
+      {id: 1, date: "16/05/24", route: "Mwz-Sing", cost:"68,000" },
+      {id: 2, date: "18/05/24", route: "Ars-Dar", cost:"100,000" },
+      {id: 3, date: "21/06/24", route: "Iri-Dom", cost:"100,000" },
+      {id: 4, date: "25/06/24", route: "Iri-Ars", cost:"70,000" },
     ];
 
-
+    //CREATING USER OBBJECT
+    const {user} = useUser();
 
     return (
        <SafeAreaView style={styles.container}>
@@ -84,7 +87,7 @@ function Payment({navigation}) {
 
                         <View>
                             <Text style={{marginLeft: 8, fontWeight:'700', color: colors.black,  fontFamily:'serif'}}>{greeting}</Text>    
-                            <Text style={{fontSize: 23, fontWeight: '700', color: colors.black,  fontFamily:'serif'}}> George</Text>    
+                            <Text style={{fontSize: 23, fontWeight: '700', color: colors.black,  fontFamily:'serif'}}>{user?.name}</Text>    
                         </View>
 
                         <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.navigate('Login')} >
@@ -94,7 +97,7 @@ function Payment({navigation}) {
             </View>
 
             <View style={styles.Payments}>
-                <Text style={{fontSize: 25, color : colors.black, fontWeight: '800', fontFamily: fonts.serif  }}>
+                <Text style={{fontSize: 25, color : colors.black, fontWeight: '800', fontFamily: fonts.serif, marginLeft: 6  }}>
                     Payments
                 </Text>            
             </View>
@@ -103,7 +106,7 @@ function Payment({navigation}) {
               <View>
 
                 <Text style={{ fontFamily:fonts.serif, color: colors.secondary, fontSize: 18, fontWeight:"700"}}>   Total Payable amount </Text>
-                <Text style={{ fontFamily:fonts.serif, color: colors.secondary, fontSize: 18, fontWeight:"700"}}>   68,000</Text>
+                <Text style={{ fontFamily:fonts.serif, color: colors.secondary, fontSize: 18, fontWeight:"700"}}>   68,000 /=</Text>
               </View>
 
               <View>
@@ -123,12 +126,50 @@ function Payment({navigation}) {
 
 
                 <View style={styles.PaymentsView}>
-                     <Text> </Text>
+                     <Text style={{backgroundColor: colors.secondary, }}> </Text>
 
                 </View>
 
                 <View style={styles.PaymentsHistory}>
-                     <Text> </Text>
+                  {/*HISTORY HEADING*/}
+                     <View style={{flex:1,  width: "100%"}}>
+                          <Text style={{fontFamily:fonts.serif, color:colors.secondary, fontSize: 18, marginLeft:7, fontWeight: "600"}}>
+                            Payment History
+                          </Text>
+                     </View>
+
+                     <View style={{flex:3, width: "100%"}}>
+                          <FlatList 
+                          
+                          
+                data={paymentHistory}
+                keyExtractor={item => (
+                  item.id.toString()
+                )}
+                renderItem={({item}) => (
+                  <View style={{ marginHorizontal: 10, flexDirection: "row", justifyContent:"space-between" }}>
+                  <View>
+                    <Text style={[styles.text, { color: colors.secondary, fontSize: 18, fontWeight: "700" }]}>{item.date}</Text>
+                  </View>
+                  <View>
+                    <Text style={[styles.text, { color: colors.secondary, fontSize: 18, fontWeight: "700" }]}>{item.route}</Text>
+                  </View>
+                  <View>
+                    <Text style={[styles.text, { color: colors.secondary, fontSize: 18, fontWeight: "700" }]}>{item.cost} /=</Text>
+                  </View>
+                </View>
+                 
+
+                )
+                }
+
+                style={{width: "100%", borderRadius: 20,}}
+                  
+              
+                          
+                          />
+                     </View>
+
 
                 </View>
 

@@ -2,6 +2,7 @@ import React, {useState, useEffect, use} from 'react';
 import { ImageBackground, FlatList, SafeAreaView, View, StyleSheet, Image, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { useUser } from '../context/UserContext';
 import { colors } from '../components/colors';
 
 export default function Main({navigation}) {
@@ -30,6 +31,8 @@ export default function Main({navigation}) {
     return () => clearInterval(intervalId); // Cleanup function to stop interval on unmount
   }, []);
 
+  const {user} = useUser();
+
 
 
   return (
@@ -47,7 +50,7 @@ export default function Main({navigation}) {
 
               <View>
                   <Text style={{marginLeft: 8, fontWeight:'700', color: colors.black, fontFamily: 'serif'}}>{greeting}</Text>    
-                  <Text style={{fontSize: 23, fontWeight: '700', color: colors.black,  fontFamily:'serif'}}> George</Text>    
+                  <Text style={{fontSize: 23, fontWeight: '700', color: colors.black,  fontFamily:'serif'}}> {user?.name}</Text>    
               </View>
 
               <TouchableOpacity  style={{marginLeft: 200}}  onPress={() => navigation.replace('Login')} >

@@ -3,8 +3,8 @@ import { SafeAreaView, View, TextInput, Text, Button, TouchableOpacity, Image, S
 import  {Formik}  from 'formik';
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from 'react-native-vector-icons/MaterialCommunityIcons';
-
-
+import { useUser } from '../context/UserContext';
+import axios from 'axios';
 
 
 import Footer from '../components/Footer';
@@ -17,7 +17,7 @@ export default function Login({navigation}) {
 };
   
 
-  
+//const { setUser } = useUser(); 
   
   
   
@@ -28,25 +28,16 @@ export default function Login({navigation}) {
 
   
 // HANDLE LOGIN
-const handleLogin = async (values) => {
-    //const {email, password} = values;
-    // try {
-    //   const response = await axios.post('https://your-api-endpoint/login', {
-    //     email,
-    //     password,
-    //   });
-
-    //   if (response.data.token) {
-    //     // Store the token in AsyncStorage for future use
-    //     await AsyncStorage.setItem('authToken', response.data.token);
-    //     navigation.navigate('Main'); // Navigate to the home screen
-    //   } else {
-    //     setError('Invalid email or password');
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   setError('An error occurred. Please try again later.');
-     }
+// const handleLogin = () => {
+//   axios.post('http://your-django-backend-url/api/login',  values )
+//     .then(response => {
+//       setUser(response.data.user);
+//       navigation.navigate('TabNav');
+//     })
+//     .catch(error => {
+//       console.error(error);
+//     });
+// };
 
 
 
@@ -117,10 +108,10 @@ const handleLogin = async (values) => {
             <TouchableOpacity
               style={[styles.button,]}
               onPress={
-              () => navigation.navigate("AppNav")
-             // handleSubmit
+              () => navigation.navigate("TabNav")
+             
             }
-              //disabled = {values.email === '' || values.password === '' }
+             // disabled = {values.email === '' || values.password === '' }
             >
               <Text style={{ fontSize: 19, fontWeight: 'bold',  fontFamily: 'serif', color: colors.black }}>Sign In</Text>
             </TouchableOpacity>

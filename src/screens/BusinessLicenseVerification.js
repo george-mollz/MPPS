@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Button } from 'react-native'
 import DocumentPicker, { types } from 'react-native-document-picker'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-
+import { Axios } from 'axios';
 
 
 
