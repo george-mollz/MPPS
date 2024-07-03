@@ -78,7 +78,7 @@ function BusinessLicenseVerification({navigation}) {
      <SafeAreaView style={styles.safeArea}>
      <View style={styles.upperView} >  
       <View>
-        <TouchableOpacity onPress={() => navigation.navigate("Main") }>
+        <TouchableOpacity onPress={() => navigation.navigate("TabNav") }>
             <MaterialCommunityIcons name="chevron-left" size={37} color={colors.black}/>
         </TouchableOpacity>
       </View>

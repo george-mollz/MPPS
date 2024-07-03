@@ -33,18 +33,19 @@ function TabNav(props) {
       tabBarActiveTintColor: colors.secondary,
       tabBarInactiveBackgroundColor: colors.lightgray,
       tabBarInactiveTintColor: colors.black,
+      
       tabBarStyle: {
         height: 60,
         position: 'absolute',
         bottom: 16,
         right: 11,
         left: 11,
-        borderRadius: 40,
+        borderRadius: 16,
         
         
       }
     }} 
-
+  
 
     
    
